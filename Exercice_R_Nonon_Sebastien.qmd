@@ -1,0 +1,532 @@
+---
+title: "Exercice R - MS EBDE UTT 2025/2026 - Sébastien Nonon"
+format: html
+editor: visual
+execute:
+  warning: false
+  message: false
+---
+
+# Module 1
+
+On commence par nettoyer notre environnement:
+
+```{r}
+rm(list = ls())
+gc()
+```
+
+## Exercice 1
+
+Créer le vecteur qui contient tous les multiples de 3 entre 1 et 50.
+
+Pour cela on utilise la fonction seq() pour créer notre vecteur.
+
+On affiche ensuite notre vecteur avec la fonction print().
+
+```{r}
+notre_vec <- seq(from = 3, to = 50, by = 3)
+print(notre_vec)
+```
+
+## Exercice 2
+
+Créer la fonction "tronque()" qui prend pour argument un nombre x et un vecteur vec et qui change tous les éléments du vecteur vec supérieur à x en x.
+
+On écrit la définition de la fonction:
+
+```{r}
+tronque <- function(x,vec){
+  # On filtre vec sur les éléments supérieur à x, et on leur attribue x
+  vec[vec>x] <- x
+  return(vec)
+}
+```
+
+On teste la fonction avec le vecteur de l'exercice 1, que l'on tronque à 30:
+
+```{r}
+print(tronque(30, notre_vec))
+```
+
+On est content on a bien tronqué notre vecteur.
+
+## Exercice 3
+
+Créer la fonction "maxi()" qui a un vecteur numérique associe son élément maximum.
+
+```{r}
+maxi <- function(vec){
+  
+  # on initialise le maximum avec le premier élément
+  max <- vec[1]
+  
+  for (i in 2:length(vec)){ # on parcoure tous les éléments
+    
+    if (vec[i] > max){ # on compare avec notre max actuel
+      
+      max <- vec[i] # condition vérifiée alors on atrribue notre nouveau max
+    }
+  }
+  return(max)
+}
+```
+
+On teste notre focntion sur le vecteur du premier exo:
+
+```{r}
+print(maxi(notre_vec)) # on affiche le résultat
+```
+
+## Exercice 4
+
+Créer un dataframe de 10 étudiants avec leur nom, prénom, âge, sexe, entreprise. Puis maniopulation sur le jeu de données.
+
+On commence par créer notre dataframe:
+
+```{r}
+etudiants <- data.frame(
+  nom = c("Dupont", "Jalibert", "Penaud", "Cros", "Jelonch",
+          "Meafou", "Marchand", "Depoortere", "Flament", "Fickou"),
+  prenom = c("Antoine", "Mathieu", "Damian", "François", "Anthony",
+             "Emmanuel", "Julien", "Nicolas", "Thibault", "Gael"),
+  age = c(18, 20, 19, 23, 22, 25, 17, 23, 24, 21),
+  sexe = c("F", "M", "F", "M", "F", "M", "F", "M", "F", "M"),
+  entreprise = c("Google", "Microsoft", "Amazon", "Apple", "Meta",
+                 "IBM", "Oracle", "SAP", "Salesforce", "Facebook")
+)
+```
+
+Notre DF est créée, on peut l'observer:
+
+```{r}
+print(etudiants)
+```
+
+On calcule l'âge moyen de notre groupe d'étudiant:
+
+```{r}
+print(mean(etudiants$age))
+```
+
+On regarde la proportion de femme dans notre groupe d'étudiant:
+
+```{r}
+nb_femme <- sum(etudiants$sexe == "F")
+nb_total <- nrow(etudiants)
+proportions_femme <- nb_femme / nb_total
+
+print(proportions_femme)
+```
+
+On essaye maintenenat de créer une variable de tranche d'âge:
+
+```{r}
+etudiants$tranche_age <- cut(etudiants$age,
+                             breaks = c(0,19,21,23,30),
+                             labels = c("U19","U21","U23","A"))
+```
+
+On regarde si notre nouvelle variable s'est bien intégrée au dataframe:
+
+```{r}
+print(etudiants)
+```
+
+On va utiliser le package dplyr pour faire des statistiques par tranche d'âge, on commence donc par charger le package:
+
+```{r}
+library(dplyr)
+```
+
+On peut maintenant calculer l’âge moyen et la proportion de femmes par tranche d’âge.
+
+```{r}
+etudiants %>% 
+  group_by(tranche_age) %>% 
+  summarise(effectif = n(),
+            age_moyen = round(mean(age),2),
+            proportion_femmes = round(mean(sexe == "F"),2)) %>% 
+  arrange(tranche_age)
+```
+
+# Module 2
+
+On commence par nettoyer notre environnement:
+
+```{r}
+rm(list = ls())
+gc()
+```
+
+## Exercice 1
+
+On veut importer PisaFR et comparer avec PisaUS, on considère que nos données se trouvent dans le dossier "Data":
+
+```{r}
+pisa_fr <- read.table("Data/PisaFR.csv", 
+                      header = TRUE, 
+                      sep = ";", 
+                      dec = ",", 
+                      na = " ")
+
+pisa_us <- read.table("Data/PisaUS.csv", 
+                      header = TRUE, 
+                      sep = ";", 
+                      dec = ",", 
+                      na = " ")
+```
+
+On observe les structures de PisaFR et de PisaUS:
+
+```{r}
+str(pisa_fr)
+str(pisa_us)
+```
+
+On peut voir que nous avons les mêmes variables. Il y a plus de lignes d'observations dans PisaFR que dans PisaUS. Enfin, on retrouve la même variable GLCM remplie de NA dans les deux dataframes.
+
+## Exercice 2
+
+On supprime la colonne GLCM, qui est la 6e du dataframe:
+
+```{r}
+pisa_fr<-pisa_fr[,-6] # pour supprimer la sixième colonne
+head(pisa_fr)
+```
+
+On veut supprimer toutes les observations dont la somme des notes en français (READ) et en maths (MATH) sont inférieure à 1000:
+
+```{r}
+pisa_fr <- pisa_fr[pisa_fr$READ + pisa_fr$MATH >= 1000, ]
+```
+
+Ainsi que celles des étudiants dont les notes en sciences (SCIE), sont inférieures à 500:
+
+```{r}
+pisa_fr <- pisa_fr[pisa_fr$SCIE >= 500, ]
+```
+
+On effectue un histogramme pour vérifier que notre filtre a bien fonctionné pour la condition des notes en sciences inférieures à 500:
+
+```{r}
+hist(pisa_fr$SCIE,
+     main = "Distribution des notes en Sciences (SCIE)\nAprès filtrage (>= 500)",
+     xlab = "Note en Sciences",
+     ylab = "Fréquence",
+     xlim = c(400, 900))
+```
+
+On est content on voit qu'il n'y a aucune observations avec une note inférieure à 500.
+
+## Exercice 3
+
+On souhaite refaire la question précèdente avec les packages dplyr et ggplot2.
+
+Pour cela on commence par re-importer nos données:
+
+```{r}
+pisa_fr <- read.table("Data/PisaFR.csv", 
+                      header = TRUE, 
+                      sep = ";", 
+                      dec = ",", 
+                      na = " ")
+```
+
+On charge également les packages nécessaires:
+
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+Et maintenant nous pouvons utiliser les packages:
+
+```{r}
+pisa_fr %>%
+  select(-GLCM) %>% 
+  filter(READ + MATH >= 1000, SCIE >= 500) %>%
+  ggplot(aes(x = SCIE)) +
+  geom_histogram() +
+  labs(
+    title = "Distribution des notes en Sciences",
+    x = "Note en Sciences",
+    y = "Fréquence"
+  ) 
+```
+
+## Exercice 4
+
+On va fusionner nos deux dataframe:
+
+```{r}
+pisa_new <- rbind(pisa_fr, pisa_us)
+```
+
+
+On souhaite manipuler les données en utilisant les commandes slice, filter, select, relocate, rename, arrange, mutate, groupe_by et le pipe
+
+```{r}
+pisa_new %>%
+  
+  # renommer pour plus de clarté
+  rename(Pays = COUNT, Sciences = SCIE, Math = MATH, Lecture = READ) %>%
+  
+  # créer une nouvelle variable
+  mutate(Total_Score = Math + Lecture) %>%
+  
+  # filtrer les observations
+  filter(Total_Score >= 1000, Sciences >= 500) %>%
+  
+  # sélectionner et réorganiser les colonnes
+  select(Sciences, Math, Lecture, Total_Score, Pays) %>% 
+  relocate(Total_Score, .after = Sciences) %>%
+  
+  # trier par score total décroissant
+  arrange(desc(Total_Score)) %>%
+  
+  # grouper et résumer
+  group_by(Pays) %>%
+  
+  # garder les 10 meilleurs
+  slice(1:10)
+```
+
+## Exercice 5
+
+On supprime tous les objets en mémoire:
+
+```{r}
+rm(list = ls())
+```
+
+Et on recharge les données de PisaFR:
+
+```{r}
+# Recharger les données
+pisa_fr <- read.table("Data/PisaFR.csv", 
+                      header = TRUE, sep = ";", dec = ",", na = " ")
+
+library(tidyverse)
+```
+
+Grâce à la librairie dplyr nous allons regarder quelques statistiques clés pour les Maths, la Lecture et les Sciences:
+
+```{r}
+pisa_fr %>%
+  summarise(
+    Matières = c("Maths", "Lecture", "Sciences"),
+    Moyenne = c(mean(MATH, na.rm = TRUE), mean(READ, na.rm = TRUE), mean(SCIE, na.rm = TRUE)),
+    Mediane = c(median(MATH, na.rm = TRUE), median(READ, na.rm = TRUE), median(SCIE, na.rm = TRUE)),
+    Ecart_Type = c(sd(MATH, na.rm = TRUE), sd(READ, na.rm = TRUE), sd(SCIE, na.rm = TRUE))
+  )
+```
+
+On remarque que la dispersion est assez proche, les medianes et les écarts-types sont proches.
+
+On décide de faire un boxplot pour chacune de ces matières car on s'intéresse à la dispersion de celles-ci:
+
+```{r}
+boxplot(pisa_fr[, c("MATH", "READ", "SCIE")],
+        main = "Comparaison de la dispersion des notes",
+        col = c("red", "blue", "green"),
+        ylab = "Note")
+```
+
+Cela conforte l'impression que l'on a eu avec le summarise précedent.
+
+Regardons maintenenat la corrélation entre les Maths et les Sciences, est-ce qu'il y a une relation ?
+
+```{r}
+ggplot(pisa_fr, aes(x = MATH, y = SCIE)) +
+  geom_point() +
+  labs(title = "Corrélation entre les Maths et les Sciences")
+```
+
+Visuellement on remarque une très forte corrélation positive entre les notes en maths et en sciences.
+
+# Module 3
+
+On commence par nettoyer notre environnement:
+
+```{r}
+rm(list = ls())
+gc()
+```
+
+## Exercice 1
+
+On importe les données:
+
+```{r}
+sa_heart <- read.table("data/SAHeart.csv", header = TRUE, sep = ",", dec = ".")
+```
+
+On observe les premières lignes de notre dataframe:
+
+```{r}
+head(sa_heart)
+```
+
+Ainsi que la structure du jeu de données:
+
+```{r}
+str(sa_heart)
+```
+
+## Exercice 2
+
+Dans un premier temps nous allons conserver seulement les variables quantitatives:
+
+```{r}
+sa_heart_quant <- sa_heart %>%
+  select(-famhist, -chd)
+```
+
+## Exercice 3
+
+Nous allons transformer les données afin d'effectuer une ACP:
+
+```{r}
+sa_heart_cr <- scale(sa_heart_quant, center = TRUE, scale = TRUE)
+```
+
+On va utiliser les packages factoextra et FactoMineR pour réaliser l'ACP.
+
+On charge nos librairies:
+
+```{r}
+library(factoextra)
+library(FactoMineR)
+```
+
+On réalise l'ACP sur nos données centrées réduites:
+
+```{r}
+res.pca <- PCA(sa_heart_cr, graph = FALSE)
+```
+
+On peut à présent représenter le nuage des individus sur plan Axe1 - Axe2:
+
+```{r}
+# Nuage des individus
+fviz_pca_ind(res.pca,
+             geom = "point")    
+```
+
+On peut également regarder le nuage des variables:
+
+```{r}
+fviz_pca_var(res.pca, col.var = "black")
+```
+
+### Interprétation de l'axe 1
+
+Cet axe est celui qui explique la plus grande part de la variance de nos données.
+
+On observe que les variables adiposity, obesity, age et sbp pointent fortement vers la droite de l'axe.
+
+### Interprétation de l'axe 2
+
+Cet axe apporte une information complémentaire décorrélée du premier.
+
+Les variables alcohol et tobacco pointent vers le haut, tandis que typea pointe vers le bas.
+
+### Explicabilité des axes
+
+D'après nos sorties, on a:
+  - l'Axe 1 explique 35,1% de la variance totale des données
+  - l'Axe 2 explique 15% de la variance
+  - à eux deux, ces axes captent 50,1% de l'info
+
+## Exercice 4
+
+On veut colorer les points dans le nuage des individus en fonction des deux variables qualitatives.
+
+### Selon CHD
+
+On refait donc notre nuage des individus, en fonction de la présence de maladie cardiaque chez l'individu.
+
+```{r}
+fviz_pca_ind(res.pca,
+             geom = "point",
+             col.ind = as.factor(sa_heart$chd), # On transforme en facteur pour avoir des couleurs distinctes
+             palette = c("blue", "red"), # Bleu pour sain (0), Rouge pour malade (1)
+             legend.title = "Maladie (chd)")
+```
+
+Par rapport à l'axe 1, on remarque que les individus malades ont une valeur plus élevés. 
+
+Ils ont donc des valeurs plus élevés sur les variables fortement représentées par cette axe (adiposity, obesity, age et sbp)
+
+### Selon famhist
+
+On refait donc notre nuage des individus, en fonction de la présence d'antécédents familiaux chez l'individu
+
+```{r}
+fviz_pca_ind(res.pca,
+             geom = "point",
+             col.ind = as.factor(sa_heart$famhist), # On transforme en facteur pour avoir des couleurs distinctes
+             palette = c("blue", "red"), # Bleu pour sain (0), Rouge pour malade (1)
+             legend.title = "Antécédents (famhist)")
+```
+
+On retrouve une disparité similaire à la variable chd.
+
+## Exercice 5
+
+Pour réaliser l'algo des k-means on reprend les données centrées et réduites.
+
+On se fait un vecteur de stockage des inertie en fonciton du nb de cluster k.
+
+```{r}
+inertie_vec <- rep(0, times = 10)
+```
+
+On lance ensuite l'algo avec k allant de 1 à 10 clusters:
+
+```{r}
+for (k in 1:10) {
+  # on utilise nstart=20 pour stabiliser les résultats
+  km <- kmeans(sa_heart_cr, centers = k, nstart = 5)
+  inertie_vec[k] <- km$tot.withinss
+}
+```
+
+Et maintenant on peut faire un graphique pour regarder le critère du coude :
+
+```{r}
+plot(1:10, inertie_vec, type = "b", 
+     xlab = "Nombre de clusters (k)", 
+     ylab = "Inertie intra-classe",
+     main = "Critère du coude pour SAHeart")
+```
+
+On observe un coude à k=3 donc on retient cette valeur pour notre paramètre.
+
+```{r}
+groupes.km <- kmeans(sa_heart_cr, centers = 3, nstart = 20)
+```
+
+Nous représentons maintenant les clusters créés sur le plan de l'axe1 - axe2 de l'ACP:
+
+```{r}
+fviz_cluster(groupes.km, data = sa_heart_cr, ellipse.type ="convex",
+xlab = "Axe␣1", ylab = "Axe␣2")+
+theme_minimal()
+```
+
+On ajoute la colonne des clusters (groupes.km$cluster) à notre jeu de données original pour pouvoir comparer.
+
+```{r}
+# Ajout des clusters au dataframe d'origine
+sa_heart_bilan <- sa_heart %>%
+  mutate(Cluster = as.factor(groupes.km$cluster))
+
+# Tableau croisé pour la maladie (chd)
+table(sa_heart_bilan$Cluster, sa_heart_bilan$chd)
+
+# Tableau croisé pour les antécédents (famhist)
+table(sa_heart_bilan$Cluster, sa_heart_bilan$famhist)
+```
+
