@@ -530,3 +530,49 @@ table(sa_heart_bilan$Cluster, sa_heart_bilan$chd)
 table(sa_heart_bilan$Cluster, sa_heart_bilan$famhist)
 ```
 
+## Exercice 6
+
+Nous allons effectuer une classification ascendante hiérarchique.
+
+La première étape est de construire la matrice des distances avec la fonction dist:
+
+```{r}
+d.sa_heart <- dist(sa_heart_cr)
+```
+
+Ensuite on peut lancer le clustering hiérarchique avec la commande hclust() puis afficher le dendogramme:
+
+```{r}
+hc.ward = hclust(dist(sa_heart_cr), method="ward.D2")
+
+plot(hc.ward)
+```
+
+À partir du dendrogramme, on peut construire les classes en effectuant une coupe horizontale dans l’arbre et récupérer les classes ainsi définies. La commande cutree permet de préciser le nombre de clusters que l’on veut et rect.hclust() de les représenter sur le dendogramme. 
+
+Au préalable, pour nous aider à choisir le nombre de classes, nous pouvons représenter les sauts d’inertie du dendogramme selon le nombre de classes retenues.
+
+```{r}
+inertie <- sort(hc.ward$height, decreasing =  T)
+
+plot(inertie[1:20], type = "s", xlab = "Nombre de classes", ylab = "Inertie")
+```
+
+On remarque un saut très net pour k = 2, ensuite on peut aussi relever un saut pour k = 5.
+
+```{r}
+clusterCAH = cutree(hc.ward,4)
+plot(hc.ward)
+rect.hclust(hc.ward, 2, border = "green3") # test avec 2 classes
+rect.hclust(hc.ward, 5, border = "red")
+```
+
+Comme pour les kmeans, on peut afficher les clusters:
+
+```{r}
+fviz_cluster(list(cluster = clusterCAH, data = sa_heart_cr), 
+             ellipse.type = "convex",
+             xlab = "Axe 1", ylab = "Axe 2") +
+  theme_minimal()
+```
+
