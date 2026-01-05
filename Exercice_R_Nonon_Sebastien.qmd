@@ -576,3 +576,62 @@ fviz_cluster(list(cluster = clusterCAH, data = sa_heart_cr),
   theme_minimal()
 ```
 
+Comme pour les k-means, on croise ces nouveaux groupes avec chd et famhist.
+
+```{r}
+# Comparaison avec la maladie (chd)
+table(clusterCAH, sa_heart$chd)
+```
+
+```{r}
+# Comparaison avec les antécédents (famhist)
+table(clusterCAH, sa_heart$famhist)
+```
+
+# Module 4
+
+On nettoie l'environnement
+
+```{r}
+rm(list=ls())
+```
+
+
+## Exercice 1
+
+Nous allons charger les données "Ozone.txt".
+
+```{r}
+ozone <- read.table("Data/ozone.txt", header = T, sep = " ", dec = ".")
+```
+
+On effectue quelques statistiques descriptives du jeu de données:
+
+```{r}
+summary(ozone)
+```
+
+On commence avec la matrice de corrélation pour voir quelles variables influent sur l'Ozone:
+
+```{r}
+# on utilise is.numeric pour garder les variables du df qui sont numériques, pour pouvoir appliquer la fonction cor
+
+cor(ozone[, sapply(ozone, is.numeric)])
+```
+
+
+
+```{r}
+pairs(ozone[, sapply(ozone, is.numeric)])
+```
+
+On regarde la distribution de notre variable d'intérêt:
+
+```{r}
+library(ggplot2)
+ggplot(ozone, aes(x = maxO3)) + 
+  geom_histogram(fill = "blue", color = "white", bins = 20) +
+  labs(title = "Distribution de la concentration en Ozone", x = "maxO3", y = "Fréquence") +
+  theme_minimal()
+```
+
