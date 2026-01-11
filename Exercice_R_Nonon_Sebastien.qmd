@@ -597,7 +597,9 @@ rm(list=ls())
 ```
 
 
-## Exercice 1
+## Partie 1 
+
+### Exercice 1
 
 Nous allons charger les données "Ozone.txt".
 
@@ -611,6 +613,8 @@ On effectue quelques statistiques descriptives du jeu de données:
 summary(ozone)
 ```
 
+On remarque un écart important entre le minimum et le maximum de max03. De plus, la moyenne est supérieur à la médiane de 10, ça peut indiquer la présence de pics de pollution.
+
 On commence avec la matrice de corrélation pour voir quelles variables influent sur l'Ozone:
 
 ```{r}
@@ -619,19 +623,86 @@ On commence avec la matrice de corrélation pour voir quelles variables influent
 cor(ozone[, sapply(ozone, is.numeric)])
 ```
 
-
+Pour essayer de mieux s'y retrouver dans la matrice de corrélation, on va utiliser le package ggcorrplot:
 
 ```{r}
-pairs(ozone[, sapply(ozone, is.numeric)])
+library(ggcorrplot)
+
+corr_matrix <- cor(ozone[, sapply(ozone, is.numeric)], use = "complete.obs")
+
+ggcorrplot(corr_matrix, 
+           lab = TRUE,        # Affiche les coefficients chiffrés sur la carte
+           title = "Corrélations des variables de Ozone")
+```
+On observe ici une forte corrélation positive entre maxO3 et les températures, particulièrement T12 et T15. À l'inverse, une corrélation négative avec les variables Ne9, Ne12 ou Ne15.
+On retrouve également de la colinéarité: les températures entre elles (T9, T12, T15) sont très fortement corrélées
+
+### Exercice 2
+
+On veut étudier la relation entre la variable maxO3 et T15 (la température à 15h). Pour cela on va effectuer une régression linéaire simple pour expliquer la concentration en ozone en fonction de cette température.
+
+Le modèle utilisé est de la forme $maxO3 = \beta_0 + \beta_1 \cdot T15 + \epsilon$. On utilise la fonction lm() pour estimer les paramètres.
+
+```{r}
+# Réalisation de la régression linéaire simple
+rl_simple <- lm(maxO3 ~ T15, data = ozone)
+
+# Affichage des résultats détaillés
+summary(rl_simple)
 ```
 
-On regarde la distribution de notre variable d'intérêt:
+Le coefficicient $\beta_0 = -18.73$ est la valeur théorique de l'ozone si la température était de 0°C.
+Le coefficient de $\beta_1 = 4.82$ indique l'augmentation moyenne de la concentration d'ozone pour chaque degré supplémentaire à 15h. Le coefficient est positif, cela confirme que la chaleur favorise la pollution.
+
+Le R² indique la part de la variabilité de l'ozone expliquée par la température. On a R² = 0.6 donc T15 semble être un bon prédicteur.
+
+On réalise le graphique représentant le nuage de points (T15, maxO3) et la régression linéaire:
 
 ```{r}
-library(ggplot2)
-ggplot(ozone, aes(x = maxO3)) + 
-  geom_histogram(fill = "blue", color = "white", bins = 20) +
-  labs(title = "Distribution de la concentration en Ozone", x = "maxO3", y = "Fréquence") +
+ggplot(ozone, aes(x = T15, y = maxO3)) +
+  geom_point() +                          # Nuage de points
+  geom_smooth(method = "lm", color = "red") + # Droite de régression
+  labs(title = "Lien entre Température (15h) et Ozone",
+       x = "Température à 15h (T15)",
+       y = "Concentration max en Ozone (maxO3)") +
   theme_minimal()
 ```
+
+### Exercice 3
+
+On veut à présent effectuer une régression linéaire multiple. 
+
+Pour construire ce modèle on va sélectionner les variables suivantes:
+
+- T15, c'est la variable de température avec la plus grosse corrélation avec la variable cible
+- Ne12, on a vu que une forte nébulosité faisait baisser la concentration
+- max03v, le niveau d'ozone d'un jour dépend en partie de celui de la veille
+- Vx15 : le vent joue un rôle crucial
+
+On ne garde que une variable pour chaque type (une température, une nébulosité, un vent) car on a vu que $T9$, $T12$ et $T15$ sont très corrélées entre elles et donc les inclure n'apporterait pas beaucoup de nouvelles infos au modèle et peut même le destabiliser.
+C'est aussi car on souhaite respecter le principe de parcimonie: expliquer le maximum de variance avec le minimum de variables possible et donc simplifier le modèle.
+
+De plus on a gardé les variables avec de milieu de journée, car on pense que c'est à ce moment là que les pics de formation d'ozone sont formés.
+
+On effectue donc notre régression multiple:
+
+```{r}
+# Modèle de régression linéaire multiple
+rl_multiple <- lm(maxO3 ~ T15 + Ne12 + maxO3v + Vx15, data = ozone)
+
+# Affichage du résumé statistique
+summary(rl_multiple)
+```
+
+Le coefficient de détermination $R^2$ est d'environ 0,735. Cela signifie que notre modèle explique 73,5 % de la variabilité de max03, ce qui est une nette amélioration par rapport au modèle simple (qui tournait autour de 60 %)
+
+T15 et maxO3v ont des p-values très faibles ($< 0,001$), ce qui confirme leur impact majeur et hautement significatif sur max03.
+Ne12 a un coefficient négatif (environ -2,35), confirmant que plus le ciel est couvert à midi, plus la concentration d'ozone diminue.
+Vx15 est également significatif ($p < 0,05$), montrant que la composante du vent à 15h influence les niveaux de pollution enregistrés.
+
+Ce modèle multiple est bien plus robuste pour la prédiction que le modèle simple car il intègre la synergie entre la température, l'ensoleillement et la persistance temporelle de la pollution.
+
+## Partie 2
+
+### Exercice 1
 
