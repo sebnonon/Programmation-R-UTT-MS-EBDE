@@ -704,5 +704,150 @@ Ce modèle multiple est bien plus robuste pour la prédiction que le modèle sim
 
 ## Partie 2
 
+Nettoyage de l'environnement:
+
+```{r}
+rm(list=ls())
+```
+
+
 ### Exercice 1
+
+On commence par charger les données:
+
+```{r}
+adclick <- read.csv("Data/AdClick.csv", header = TRUE, sep = ",")
+```
+
+Ensuite on effectue quelques statistiques descriptives pour explorer les données, mais avant on va passer en facteur les variables qui ne doivent pas être lues comme numériques:
+
+```{r}
+adclick$Click <- as.factor(adclick$Click)
+adclick$Gender <- as.factor(adclick$Gender)
+```
+
+Maintenant on peut s'intéresser à un summary de notre jeu de données:
+
+```{r}
+summary(adclick)
+```
+
+Ensuite on veut regarder si l'une de nos variables, à l'air d'avoir une influence sur le fait de cliquer ou non.
+
+```{r}
+ggplot(adclick, aes(x = Click, y = Age, fill = Click)) +
+  geom_boxplot() +
+  labs(title = "Distribution de l'Âge selon le Clic", x = "0=Non, 1=Oui") +
+  theme_minimal()
+```
+
+Ce boxplot de l'âge montre que le groupe Click = 1 est nettement plus âgé que le groupe Click = 0. Les utilisateurs qui cliquent sur la publicité sont sensiblement plus âgés que ceux qui ne cliquent pas.
+
+De la même manière on regarde pour le salaire:
+
+```{r}
+ggplot(adclick, aes(x = Click, y = EstimatedSalary, fill = Click)) +
+  geom_boxplot() +
+  labs(title = "Distribution du Salaire selon le Clic", y = "Salaire Estimé") +
+  theme_minimal()
+```
+
+On remarque un net décalage vers le haut pour le groupe qui ont cliqué. La médiane et l'ensemble de la boîte sont situées plus haut que pour le groupe 0.
+Les personnes avec un salaire plus élevé ont plus tendance à s'intéresser à la publicité.
+
+```{r}
+
+ggplot(adclick, aes(x = Gender, fill = Click)) +
+  geom_bar(position = "fill") + # "fill" pour voir les pourcentages
+  labs(title = "Proportion de Clics par Genre", y = "Fréquence") +
+  theme_minimal()
+```
+
+Les proportions de clics entre les hommes et les femmes sont assez proches, le genre ne semble pas influencer fortement le clic.
+
+### Exercice 2
+
+Nous allons maintenant effectuer une régression logistique pour modéliser la probabilité de cliquer sur la publicité en fonction de l'âge, du salaire et du genre.
+
+On utilise la fonction glm() avec l'argument family = binomial pour spécifier que la variable réponse suit une loi binomiale avec 0 ou 1.
+
+```{r}
+# ici on réalise le modèle
+reg_log <- glm(Click ~ Age + EstimatedSalary + Gender, 
+               data = adclick, 
+               family = binomial)
+
+# puis on affiche les résultats
+summary(reg_log)
+```
+
+L'intercept est très négatif, ce qui signifie que par défaut (âge 0, salaire 0), la probabilité de cliquer est quasi nulle. 
+L'age, le coefficient est $0.237 > 0$ et très significatif car $p < 0.001$. Cela confirme notre analyse exploratoire : plus on est âgé, plus la probabilité de cliquer augmente.
+Le Salaire: le coefficient est aussi positif et significatif. Un salaire élevé augmente les chances de clic.
+Le Genre: le coefficient = 0.33 n'est pas significatif car $p = 0.274 > 0.05$. Cela signifie que le genre n'a pas d'impact réel sur la décision de cliquer une fois qu'on connaît l'âge et le salaire. On pourrait envisager de retirer cette variable pour simplifier le modèle.
+
+Nous allons maintenant observer les erreurs de classifications grâce à une table croisant le clic prédit et le clic effectif
+Pour ça on calcule la prédiction des probabilités:
+
+```{r}
+prev<-predict(reg_log, type="response")
+```
+
+Quand la proba est > 0.5 alors clic = 1 ; sinon clic = 0
+
+```{r}
+prev<-as.numeric(prev>0.5)
+```
+
+Et maintenant on peut regarder le tableau de fréquence des prédictions 0/1 et l'accuracy de notre modèle:
+
+```{r}
+# precision globale
+mean(prev==adclick$Click)
+
+table(prev,adclick$Click)
+```
+Il y a 20 faux positifs (prédits cliqueurs à tort) et 39 faux négatifs (cliqueurs ratés).
+Le modèle est performant avec 85% de bonnes prédictions.
+
+### Exercice 3
+
+On souhaite construire un arbre de classification, pour cela on doit charger les librairies :
+
+```{r}
+library(rpart)
+library(rpart.plot)
+```
+
+Ensuite on peut construire notre arbre avec rpart:
+
+```{r}
+arbre <- rpart(Click~.,data=adclick,cp=0.02)
+```
+
+La librairie rpart.plot permet de résumer l’information de l’arbre et de le représenter graphiquement :
+
+```{r}
+rpart.plot(arbre,main="Représentation de l’arbre")
+```
+
+Regardons les prédictions et la performance de notre arbre :
+
+```{r}
+# Prédictions sous forme de probabilités
+pred_arbre<-predict(arbre,data=adclick)
+
+# Prédictions sous forme de variable binaire
+pred_arbre_cl<-predict(arbre,data=adclick,type="class")
+
+# Comparaison avec les "vraies" valeurs de Y
+table(pred_arbre_cl, adclick$Click)
+
+# Taux de bonnes prédictions
+mean(pred_arbre_cl==adclick$Click)
+```
+
+L'arbre de classification se révèle être le modèle le plus performant pour ce problème. Avec une précision supérieure à 90%, il surpasse la régression logistique.
+
+# Module 5
 
