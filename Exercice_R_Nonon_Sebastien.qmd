@@ -851,3 +851,277 @@ L'arbre de classification se révèle être le modèle le plus performant pour c
 
 # Module 5
 
+## Présentation, description et exploration des données
+
+Pour cet exercice nous choisissons le jeu de données *Breast Cancer Wisconsin (Diagnostic)*.
+
+Ce jeu de données provient de UCI Machine Learning Repository, qui est une archive de l'Université de Californie à Irvine, elle centralise tout un tas de jeux de données de divers domaines. 
+
+La variable à prédire est nommée `Diagnosis`. Elle est qualitative et comporte deux modalités:
+
+- M (Maligne) : Indique une tumeur cancéreuse.
+- B (Bénigne) : Indique une tumeur non cancéreuse.
+
+Pour chaque observation, 30 variables numériques sont disponibles. Elles correspondent à la moyenne, l'écart-type et la valeur maximale, de 10 mesures de la tumeur.
+
+On commence par nettoyer notre environnement:
+
+```{r}
+rm(list=ls())
+```
+
+Nous pouvons maintenant charger nos données:
+
+```{r}
+url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data"
+df <- read.csv(url, header = FALSE, sep = ",")
+```
+
+Pour se faciliter la suite de notre travail, nous allons renommer les colonnes du dataset:
+
+```{r}
+colnames(df) <- c(
+  "ID", "Diagnostic",
+  
+  # Les 10 Moyennes
+  "Rayon_Moy", "Texture_Moy", "Perimetre_Moy", "Aire_Moy", "Lisse_Moy", 
+  "Compacite_Moy", "Concavite_Moy", "Pts_Concaves_Moy", "Symetrie_Moy", "Dim_Fractale_Moy",
+  
+  # Les 10 Erreurs Standards (SE)
+  "Rayon_SE", "Texture_SE", "Perimetre_SE", "Aire_SE", "Lisse_SE", 
+  "Compacite_SE", "Concavite_SE", "Pts_Concaves_SE", "Symetrie_SE", "Dim_Fractale_SE",
+  
+  # Les 10 Pires valeurs (Worst)
+  "Rayon_Pire", "Texture_Pire", "Perimetre_Pire", "Aire_Pire", "Lisse_Pire", 
+  "Compacite_Pire", "Concavite_Pire", "Pts_Concaves_Pire", "Symetrie_Pire", "Dim_Fractale_Pire"
+)
+
+df$Diagnostic <- as.factor(df$Diagnostic)
+```
+
+
+Nous allons maintenant analyser les varaibles explicatives de notre data frame.
+
+Nous utilisons la fonction summary pour obtenir un aperçu rapide:
+
+```{r}
+summary(df)
+```
+
+On peut voir que le jeu de données contient 569 observations. On compte 357 cas bénins et 212 cas malins.
+
+On remarque des disparités d'échelles, notamment entre:
+L'Aire_Moy qui varie de 143,5 à 2501,0 (moyenne à 654,9) et la Lisse_Moy qui varie de 0,052 à 0,163 (moyenne à 0,096).
+
+De plus, on va supprimer la variable ID qui n'a pas d'intérêt:
+
+```{r}
+df$ID <- NULL
+```
+
+On s'intéresse maintenant à la corrélation entre les variables:
+
+Nous avons scindé l'analyse des corrélations en trois volets pour conserver la lisibilité des coefficients. 
+
+
+```{r}
+library(ggcorrplot)
+
+# Matrice des Moyennes
+p1 <- ggcorrplot(cor(df[, 2:11]), 
+                 type = "lower", lab = TRUE, 
+                 title = "Corrélations : Variables Moyennes")
+
+# Matrice des Erreurs Standard
+p2 <- ggcorrplot(cor(df[, 12:21]), 
+                 type = "lower", lab = TRUE, 
+                 title = "Corrélations des écarts types")
+
+# Matrice des "Pires" valeurs
+p3 <- ggcorrplot(cor(df[, 22:31]), 
+                 type = "lower", lab = TRUE, 
+                 title = "Corrélations : Pires valeurs")
+
+# Affichage des 3 graphiques l'un après l'autre
+p1
+p2
+p3
+```
+
+On peut voir que la forte colinéarité entre les variables de taille (Rayon, Périmètre, Aire) est systémique et se retrouve à l'identique dans les trois groupes de mesures.
+
+On observe que les trois matrices sont quasi-identiques, ce qui confirme la redondance de l'information entre ces trois groupes.
+
+
+De la même manière, les graphiques suivants illustrent les liens entre la variable cible et les variables explicatives, permettant de repérer visuellement les variables qui distinguent le plus nettement les tumeurs malignes des tumeurs bénignes.
+
+```{r}
+library(ggplot2)
+library(reshape2)
+
+# On passe les données en format "long" pour ggplot
+# On ne garde que le Diagnostic et les 10 variables moyennes
+data_long <- melt(df[, 1:11], id.vars = "Diagnostic")
+
+# Création de la grille de Boxplots
+ggplot(data_long, aes(x = Diagnostic, y = value, fill = Diagnostic)) +
+  geom_boxplot() +
+  facet_wrap(~variable, scales = "free") + # "free" car les échelles sont très différentes
+  labs(title = "Distribution des variables moyennes selon le Diagnostic",
+       y = "Valeur normalisée (échelle libre)") +
+  theme_minimal()
+```
+
+```{r}
+data_long_se <- melt(df[, c(1, 12:21)], id.vars = "Diagnostic")
+
+ggplot(data_long_se, aes(x = Diagnostic, y = value, fill = Diagnostic)) +
+  geom_boxplot() +
+  facet_wrap(~variable, scales = "free") +
+  labs(title = "Distribution des erreurs standards (SE) selon le Diagnostic") +
+  theme_minimal()
+```
+
+```{r}
+data_long_pire <- melt(df[, c(1, 22:31)], id.vars = "Diagnostic")
+
+ggplot(data_long_pire, aes(x = Diagnostic, y = value, fill = Diagnostic)) +
+  geom_boxplot() +
+  facet_wrap(~variable, scales = "free") +
+  labs(title = "Distribution des pires valeurs (Pire) selon le Diagnostic") +
+  theme_minimal()
+```
+
+Les variables liées à la taille et à la forme (Rayon, Périmètre, Aire et surtout Points_Concaves) montrent une séparation très nette entre les classes. Les valeurs pour les tumeurs malignes (M) sont systématiquement plus élevées que pour les tumeurs bénignes (B). Ce sont nos meilleurs prédicteurs.
+
+On observe que la capacité de séparation est quasi identique entre les graphiques des "Moyennes" et des "Pires valeurs". Cela confirme visuellement la forte redondance (multicolinéarité) identifiée lors de l'analyse des corrélations.
+
+Les graphiques des erreurs standards montrent des boîtes qui se chevauchent davantage. Cela indique que l'a variabilité'ecrat type est plus "bruité" et moins prédictif que la mesure elle-même.
+
+La séparation nette des classes sur plusieurs variables nous laisse penser que les modèles de classification devraient atteindre une précision élevée.
+
+## Présentation des modèles
+
+Nous sélectionnons trois algorithmes de classifications supervisées:
+
+- *Les k plus proches voisins (k-NN)*:
+Pour prédire la classe d'un individu (ici une tumeur),  l'algorithme cherche les $k$ observations les plus proches dans l'espace des variables. La prédiction (Bénigne ou Maligne) sera celle de la majorité de ses voisins.
+Il faudra normaliser les données pour que les variables aient le même poids sur le calcul de distance.
+
+- *La forêt aléatoire* :
+L'algorithme construit un grand nombre d'arbres de décision sur des sous-échantillons de données. La décision finale est prise par un vote majoritaire
+
+- *Les machines à vecteurs de support (SVM)*:
+Le modèle cherche à tracer une frontière (un hyperlpan) qui sépare les classes avec la plus grande marge possible. Il utilise une fonction "noyau" (kernel) pour projeter les données dans un espace de plus grande dimension.
+
+## Préparation des données
+
+Avant d'entraîner on créé un échantillon de test de taille 20% de notre échantillon global:
+
+```{r}
+library(caret)
+
+# Découpage Train (80%) / Test (20%)
+set.seed(123) # Pour la reproductibilité
+
+# cette fonction nous assure un échantillonnage stratifié
+trainIndex <- createDataPartition(df$Diagnostic, p = 0.8, list = FALSE)
+train_data <- df[trainIndex, ]
+test_data  <- df[-trainIndex, ]
+
+```
+
+## Choix de stratégie d'optimisation
+
+On définit le protocole d'entraînement de nos modèles: *Validation croisée*
+
+```{r}
+train_control <- trainControl(method = "cv", number = 10)
+```
+
+Cette méthode permet d'évaluer la robustesse de nos algorithmes et de sélectionner les hyperparamètres en limitant les risques de sur-apprentissage.
+
+Au lieu d'entraîner notre modèle une seule fois, on lui demande de répéter l'opération plusieurs fois sur des sous-parties de nos données d'entraînement.
+
+## Entrainement et optimisation des modèles
+
+### k-NN 
+
+Le paramètre à optimiser est le nombre de voisins $k$. Nous ajoutons ici le pré-traitement center et scale pour normaliser nos données car k-NN y est très sensible.
+
+```{r}
+model_knn <- train(Diagnostic ~ ., 
+                   data = train_data, 
+                   method = "knn",
+                   trControl = train_control,
+                   preProcess = c("center", "scale"),
+                   tuneLength = 10) # Teste 10 valeurs de k
+```
+
+### Forêt Aléatoire
+
+Le paramètre `mtry` correspond au nombre de variables sélectionnées aléatoirement à chaque division d'un arbre.
+
+```{r}
+library(randomForest)
+
+model_rf <- train(Diagnostic ~ ., 
+                  data = train_data, 
+                  method = "rf",
+                  trControl = train_control,
+                  tuneLength = 5) # Teste 5 valeurs de mtry
+```
+
+### SVM 
+
+Nous utilisons un noyau linéaire pour commencer, où le paramètre $C$ contrôle la marge d'erreur.
+
+```{r}
+library(kernlab)
+
+model_svm <- train(Diagnostic ~ ., 
+                   data = train_data, 
+                   method = "svmLinear",
+                   trControl = train_control,
+                   preProcess = c("center", "scale"),
+                   tuneGrid = expand.grid(C = c(0.01, 0.1, 1, 10)))
+```
+
+Grâce à la validation croisée, caret a testé différentes configurations de paramètres pour chaque algorithme. La combinaison maximisant le taux de bonne classification (accuracy) a été automatiquement retenue comme modèle final.
+
+## Résultats des prédictions
+
+Pour obtenir les résultats de nos prédictions, nous allons appliquer les modèles entraînés sur l'échantillon de test (de taille 20% et qui n'ont pas servi à l'entrainement des modèles)
+
+```{r}
+pred_knn <- predict(model_knn, newdata = test_data)
+pred_rf  <- predict(model_rf,  newdata = test_data)
+pred_svm <- predict(model_svm, newdata = test_data)
+```
+
+Maintenant on peut afficher les matrices de confusion, où l'on compare les prédictions avec les vraies valeurs:
+
+```{r}
+cm_knn <- confusionMatrix(pred_knn, test_data$Diagnostic, positive = "M")
+
+print(cm_knn)
+```
+
+On voit qu'on a un taux de bonne réponse de 99%.
+Le modèle a correctement classé 71 cas bénins (B) et 41 cas malins (M). Il n'y a qu'une seule erreur (1 cas malin classé en bénin).
+
+```{r}
+cm_rf  <- confusionMatrix(pred_rf,  test_data$Diagnostic, positive = "M")
+
+print(cm_rf)
+```
+
+Le modèle de Forêt Aléatoire affiche une précision globale de 98,23 %. Bien que légèrement inférieure à celle du k-NN, cette méthode s'avère médicalement plus performante dans ce test car contrairement au k-NN, la Forêt Aléatoire n'a généré aucun faux négatif, garantissant qu'aucune tumeur cancéreuse n'a été ignorée, au prix de seulement deux faux positifs
+
+```{r}
+cm_svm <- confusionMatrix(pred_svm, test_data$Diagnostic, positive = "M")
+
+print(cm_svm)
+```
+
+Bien que le k-NN affiche la précision globale la plus élevée (99,12 %), nous recommandons l'utilisation de la Forêt Aléatoire ou du SVM pour ce problème de diagnostic. En effet, ces deux modèles privilégient la sensibilité (100 %), garantissant ainsi qu'aucun cas malin ne reste non diagnostiqué.

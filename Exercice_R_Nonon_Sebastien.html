@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -61,15 +61,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="Exercice_R_Nonon_Sebastien_files/libs/clipboard/clipboard.min.js"></script>
 <script src="Exercice_R_Nonon_Sebastien_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="Exercice_R_Nonon_Sebastien_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Exercice_R_Nonon_Sebastien_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="Exercice_R_Nonon_Sebastien_files/libs/quarto-html/popper.min.js"></script>
 <script src="Exercice_R_Nonon_Sebastien_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="Exercice_R_Nonon_Sebastien_files/libs/quarto-html/anchor.min.js"></script>
 <link href="Exercice_R_Nonon_Sebastien_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Exercice_R_Nonon_Sebastien_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Exercice_R_Nonon_Sebastien_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Exercice_R_Nonon_Sebastien_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Exercice_R_Nonon_Sebastien_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Exercice_R_Nonon_Sebastien_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Exercice_R_Nonon_Sebastien_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -102,12 +132,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Module 1</h1>
 <p>On commence par nettoyer notre environnement:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  605035 32.4    1377638 73.6   702065 37.5
-Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
+Ncells  607343 32.5    1304828 69.7   702068 37.5
+Vcells 1120398  8.6    8388608 64.0  1928153 14.8</code></pre>
 </div>
 </div>
 <section id="exercice-1" class="level2">
@@ -116,8 +146,8 @@ Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
 <p>Pour cela on utilise la fonction seq() pour créer notre vecteur.</p>
 <p>On affiche ensuite notre vecteur avec la fonction print().</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>notre_vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">3</span>, <span class="at">to =</span> <span class="dv">50</span>, <span class="at">by =</span> <span class="dv">3</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(notre_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>notre_vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">3</span>, <span class="at">to =</span> <span class="dv">50</span>, <span class="at">by =</span> <span class="dv">3</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(notre_vec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  3  6  9 12 15 18 21 24 27 30 33 36 39 42 45 48</code></pre>
 </div>
@@ -128,15 +158,15 @@ Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
 <p>Créer la fonction “tronque()” qui prend pour argument un nombre x et un vecteur vec et qui change tous les éléments du vecteur vec supérieur à x en x.</p>
 <p>On écrit la définition de la fonction:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tronque <span class="ot">&lt;-</span> <span class="cf">function</span>(x,vec){</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tronque <span class="ot">&lt;-</span> <span class="cf">function</span>(x,vec){</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># On filtre vec sur les éléments supérieur à x, et on leur attribue x</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  vec[vec<span class="sc">&gt;</span>x] <span class="ot">&lt;-</span> x</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(vec)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On teste la fonction avec le vecteur de l’exercice 1, que l’on tronque à 30:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">tronque</span>(<span class="dv">30</span>, notre_vec))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">tronque</span>(<span class="dv">30</span>, notre_vec))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  3  6  9 12 15 18 21 24 27 30 30 30 30 30 30 30</code></pre>
 </div>
@@ -147,7 +177,7 @@ Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
 <h2 class="anchored" data-anchor-id="exercice-3">Exercice 3</h2>
 <p>Créer la fonction “maxi()” qui a un vecteur numérique associe son élément maximum.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>maxi <span class="ot">&lt;-</span> <span class="cf">function</span>(vec){</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>maxi <span class="ot">&lt;-</span> <span class="cf">function</span>(vec){</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on initialise le maximum avec le premier élément</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  max <span class="ot">&lt;-</span> vec[<span class="dv">1</span>]</span>
@@ -160,11 +190,11 @@ Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(max)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On teste notre focntion sur le vecteur du premier exo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">maxi</span>(notre_vec)) <span class="co"># on affiche le résultat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">maxi</span>(notre_vec)) <span class="co"># on affiche le résultat</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 48</code></pre>
 </div>
@@ -175,7 +205,7 @@ Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
 <p>Créer un dataframe de 10 étudiants avec leur nom, prénom, âge, sexe, entreprise. Puis maniopulation sur le jeu de données.</p>
 <p>On commence par créer notre dataframe:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>etudiants <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>etudiants <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">nom =</span> <span class="fu">c</span>(<span class="st">"Dupont"</span>, <span class="st">"Jalibert"</span>, <span class="st">"Penaud"</span>, <span class="st">"Cros"</span>, <span class="st">"Jelonch"</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Meafou"</span>, <span class="st">"Marchand"</span>, <span class="st">"Depoortere"</span>, <span class="st">"Flament"</span>, <span class="st">"Fickou"</span>),</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">prenom =</span> <span class="fu">c</span>(<span class="st">"Antoine"</span>, <span class="st">"Mathieu"</span>, <span class="st">"Damian"</span>, <span class="st">"François"</span>, <span class="st">"Anthony"</span>,</span>
@@ -184,11 +214,11 @@ Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">sexe =</span> <span class="fu">c</span>(<span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>),</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">entreprise =</span> <span class="fu">c</span>(<span class="st">"Google"</span>, <span class="st">"Microsoft"</span>, <span class="st">"Amazon"</span>, <span class="st">"Apple"</span>, <span class="st">"Meta"</span>,</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"IBM"</span>, <span class="st">"Oracle"</span>, <span class="st">"SAP"</span>, <span class="st">"Salesforce"</span>, <span class="st">"Facebook"</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Notre DF est créée, on peut l’observer:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(etudiants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(etudiants)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          nom   prenom age sexe entreprise
 1      Dupont  Antoine  18    F     Google
@@ -205,31 +235,31 @@ Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
 </div>
 <p>On calcule l’âge moyen de notre groupe d’étudiant:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">mean</span>(etudiants<span class="sc">$</span>age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">mean</span>(etudiants<span class="sc">$</span>age))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 21.2</code></pre>
 </div>
 </div>
 <p>On regarde la proportion de femme dans notre groupe d’étudiant:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>nb_femme <span class="ot">&lt;-</span> <span class="fu">sum</span>(etudiants<span class="sc">$</span>sexe <span class="sc">==</span> <span class="st">"F"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>nb_femme <span class="ot">&lt;-</span> <span class="fu">sum</span>(etudiants<span class="sc">$</span>sexe <span class="sc">==</span> <span class="st">"F"</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>nb_total <span class="ot">&lt;-</span> <span class="fu">nrow</span>(etudiants)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>proportions_femme <span class="ot">&lt;-</span> nb_femme <span class="sc">/</span> nb_total</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(proportions_femme)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(proportions_femme)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5</code></pre>
 </div>
 </div>
 <p>On essaye maintenenat de créer une variable de tranche d’âge:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>etudiants<span class="sc">$</span>tranche_age <span class="ot">&lt;-</span> <span class="fu">cut</span>(etudiants<span class="sc">$</span>age,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>etudiants<span class="sc">$</span>tranche_age <span class="ot">&lt;-</span> <span class="fu">cut</span>(etudiants<span class="sc">$</span>age,</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">19</span>,<span class="dv">21</span>,<span class="dv">23</span>,<span class="dv">30</span>),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"U19"</span>,<span class="st">"U21"</span>,<span class="st">"U23"</span>,<span class="st">"A"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"U19"</span>,<span class="st">"U21"</span>,<span class="st">"U23"</span>,<span class="st">"A"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On regarde si notre nouvelle variable s’est bien intégrée au dataframe:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(etudiants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(etudiants)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          nom   prenom age sexe entreprise tranche_age
 1      Dupont  Antoine  18    F     Google         U19
@@ -246,16 +276,16 @@ Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
 </div>
 <p>On va utiliser le package dplyr pour faire des statistiques par tranche d’âge, on commence donc par charger le package:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On peut maintenant calculer l’âge moyen et la proportion de femmes par tranche d’âge.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>etudiants <span class="sc">%&gt;%</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>etudiants <span class="sc">%&gt;%</span> </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tranche_age) <span class="sc">%&gt;%</span> </span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">effectif =</span> <span class="fu">n</span>(),</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">age_moyen =</span> <span class="fu">round</span>(<span class="fu">mean</span>(age),<span class="dv">2</span>),</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">proportion_femmes =</span> <span class="fu">round</span>(<span class="fu">mean</span>(sexe <span class="sc">==</span> <span class="st">"F"</span>),<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(tranche_age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(tranche_age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   tranche_age effectif age_moyen proportion_femmes
@@ -272,19 +302,19 @@ Vcells 1102549  8.5    8388608 64.0  1928002 14.8</code></pre>
 <h1>Module 2</h1>
 <p>On commence par nettoyer notre environnement:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  779241 41.7    1377638 73.6  1377638 73.6
-Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
+Ncells  781522 41.8    1304828 69.7  1304828 69.7
+Vcells 1445147 11.1    8388608 64.0  2503236 19.1</code></pre>
 </div>
 </div>
 <section id="exercice-1-1" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1-1">Exercice 1</h2>
 <p>On veut importer PisaFR et comparer avec PisaUS, on considère que nos données se trouvent dans le dossier “Data”:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"Data/PisaFR.csv"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"Data/PisaFR.csv"</span>, </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">header =</span> <span class="cn">TRUE</span>, </span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sep =</span> <span class="st">";"</span>, </span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dec =</span> <span class="st">","</span>, </span>
@@ -294,11 +324,11 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">header =</span> <span class="cn">TRUE</span>, </span>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sep =</span> <span class="st">";"</span>, </span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dec =</span> <span class="st">","</span>, </span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na =</span> <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na =</span> <span class="st">" "</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On observe les structures de PisaFR et de PisaUS:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pisa_fr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pisa_fr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   6308 obs. of  11 variables:
  $ X    : int  179992 179993 179994 179995 179996 179997 179998 179999 180000 180001 ...
@@ -313,7 +343,7 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
  $ RTSN : num  257 386 434 631 605 ...
  $ RTML : num  280 417 440 631 562 ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pisa_us)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pisa_us)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   4838 obs. of  11 variables:
  $ X    : int  582014 582015 582016 582017 582018 582019 582020 582021 582022 582023 ...
@@ -335,8 +365,8 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <h2 class="anchored" data-anchor-id="exercice-2-1">Exercice 2</h2>
 <p>On supprime la colonne GLCM, qui est la 6e du dataframe:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pisa_fr<span class="ot">&lt;-</span>pisa_fr[,<span class="sc">-</span><span class="dv">6</span>] <span class="co"># pour supprimer la sixième colonne</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pisa_fr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pisa_fr<span class="ot">&lt;-</span>pisa_fr[,<span class="sc">-</span><span class="dv">6</span>] <span class="co"># pour supprimer la sixième colonne</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pisa_fr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            X COUNT     MATH     READ     SCIE     RCLI     RCUN     RCER
 179992 179992   FRA 309.5953 288.9840 298.1477 308.9349 251.5719 309.1987
@@ -356,19 +386,19 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 </div>
 <p>On veut supprimer toutes les observations dont la somme des notes en français (READ) et en maths (MATH) sont inférieure à 1000:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="ot">&lt;-</span> pisa_fr[pisa_fr<span class="sc">$</span>READ <span class="sc">+</span> pisa_fr<span class="sc">$</span>MATH <span class="sc">&gt;=</span> <span class="dv">1000</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="ot">&lt;-</span> pisa_fr[pisa_fr<span class="sc">$</span>READ <span class="sc">+</span> pisa_fr<span class="sc">$</span>MATH <span class="sc">&gt;=</span> <span class="dv">1000</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ainsi que celles des étudiants dont les notes en sciences (SCIE), sont inférieures à 500:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="ot">&lt;-</span> pisa_fr[pisa_fr<span class="sc">$</span>SCIE <span class="sc">&gt;=</span> <span class="dv">500</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="ot">&lt;-</span> pisa_fr[pisa_fr<span class="sc">$</span>SCIE <span class="sc">&gt;=</span> <span class="dv">500</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On effectue un histogramme pour vérifier que notre filtre a bien fonctionné pour la condition des notes en sciences inférieures à 500:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pisa_fr<span class="sc">$</span>SCIE,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pisa_fr<span class="sc">$</span>SCIE,</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Distribution des notes en Sciences (SCIE)</span><span class="sc">\n</span><span class="st">Après filtrage (&gt;= 500)"</span>,</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Note en Sciences"</span>,</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Fréquence"</span>,</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -384,20 +414,20 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <p>On souhaite refaire la question précèdente avec les packages dplyr et ggplot2.</p>
 <p>Pour cela on commence par re-importer nos données:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"Data/PisaFR.csv"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"Data/PisaFR.csv"</span>, </span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">header =</span> <span class="cn">TRUE</span>, </span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sep =</span> <span class="st">";"</span>, </span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dec =</span> <span class="st">","</span>, </span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na =</span> <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">na =</span> <span class="st">" "</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On charge également les packages nécessaires:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Et maintenant nous pouvons utiliser les packages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="sc">%&gt;%</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>GLCM) <span class="sc">%&gt;%</span> </span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(READ <span class="sc">+</span> MATH <span class="sc">&gt;=</span> <span class="dv">1000</span>, SCIE <span class="sc">&gt;=</span> <span class="dv">500</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> SCIE)) <span class="sc">+</span></span>
@@ -406,7 +436,7 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution des notes en Sciences"</span>,</span>
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Note en Sciences"</span>,</span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Fréquence"</span></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  ) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -420,11 +450,11 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <h2 class="anchored" data-anchor-id="exercice-4-1">Exercice 4</h2>
 <p>On va fusionner nos deux dataframe:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>pisa_new <span class="ot">&lt;-</span> <span class="fu">rbind</span>(pisa_fr, pisa_us)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>pisa_new <span class="ot">&lt;-</span> <span class="fu">rbind</span>(pisa_fr, pisa_us)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On souhaite manipuler les données en utilisant les commandes slice, filter, select, relocate, rename, arrange, mutate, groupe_by et le pipe</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>pisa_new <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>pisa_new <span class="sc">%&gt;%</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># renommer pour plus de clarté</span></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Pays =</span> COUNT, <span class="at">Sciences =</span> SCIE, <span class="at">Math =</span> MATH, <span class="at">Lecture =</span> READ) <span class="sc">%&gt;%</span></span>
@@ -446,7 +476,7 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Pays) <span class="sc">%&gt;%</span></span>
 <span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># garder les 10 meilleurs</span></span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 5
 # Groups:   Pays [2]
@@ -479,25 +509,25 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <h2 class="anchored" data-anchor-id="exercice-5">Exercice 5</h2>
 <p>On supprime tous les objets en mémoire:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Et on recharge les données de PisaFR:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recharger les données</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recharger les données</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"Data/PisaFR.csv"</span>, </span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">";"</span>, <span class="at">dec =</span> <span class="st">","</span>, <span class="at">na =</span> <span class="st">" "</span>)</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Grâce à la librairie dplyr nous allons regarder quelques statistiques clés pour les Maths, la Lecture et les Sciences:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>pisa_fr <span class="sc">%&gt;%</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    Matières <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Maths"</span>, <span class="st">"Lecture"</span>, <span class="st">"Sciences"</span>),</span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Moyenne =</span> <span class="fu">c</span>(<span class="fu">mean</span>(MATH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">mean</span>(READ, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">mean</span>(SCIE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mediane =</span> <span class="fu">c</span>(<span class="fu">median</span>(MATH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">median</span>(READ, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">median</span>(SCIE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ecart_Type =</span> <span class="fu">c</span>(<span class="fu">sd</span>(MATH, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">sd</span>(READ, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">sd</span>(SCIE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Matières  Moyenne  Mediane Ecart_Type
 1    Maths 487.0133 495.6069   91.86448
@@ -508,10 +538,10 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <p>On remarque que la dispersion est assez proche, les medianes et les écarts-types sont proches.</p>
 <p>On décide de faire un boxplot pour chacune de ces matières car on s’intéresse à la dispersion de celles-ci:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(pisa_fr[, <span class="fu">c</span>(<span class="st">"MATH"</span>, <span class="st">"READ"</span>, <span class="st">"SCIE"</span>)],</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(pisa_fr[, <span class="fu">c</span>(<span class="st">"MATH"</span>, <span class="st">"READ"</span>, <span class="st">"SCIE"</span>)],</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Comparaison de la dispersion des notes"</span>,</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>, <span class="st">"green"</span>),</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Note"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Note"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -523,9 +553,9 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <p>Cela conforte l’impression que l’on a eu avec le summarise précedent.</p>
 <p>Regardons maintenenat la corrélation entre les Maths et les Sciences, est-ce qu’il y a une relation ?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pisa_fr, <span class="fu">aes</span>(<span class="at">x =</span> MATH, <span class="at">y =</span> SCIE)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pisa_fr, <span class="fu">aes</span>(<span class="at">x =</span> MATH, <span class="at">y =</span> SCIE)) <span class="sc">+</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Corrélation entre les Maths et les Sciences"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Corrélation entre les Maths et les Sciences"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -541,23 +571,23 @@ Vcells 1427343 10.9    8388608 64.0  2228982 17.1</code></pre>
 <h1>Module 3</h1>
 <p>On commence par nettoyer notre environnement:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger  (Mb) max used  (Mb)
-Ncells 1541273 82.4    2426710 129.7  2426710 129.7
-Vcells 2797256 21.4    8388608  64.0  4768814  36.4</code></pre>
+Ncells 1543527 82.5    2457220 131.3  2457220 131.3
+Vcells 2815053 21.5    8388608  64.0  4891667  37.4</code></pre>
 </div>
 </div>
 <section id="exercice-1-2" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-1-2">Exercice 1</h2>
 <p>On importe les données:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>sa_heart <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/SAHeart.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">dec =</span> <span class="st">"."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>sa_heart <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/SAHeart.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">dec =</span> <span class="st">"."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On observe les premières lignes de notre dataframe:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sa_heart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sa_heart)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  sbp tobacco  ldl adiposity famhist typea obesity alcohol age chd
 1 160   12.00 5.73     23.11 Present    49   25.30   97.20  52  Si
@@ -570,7 +600,7 @@ Vcells 2797256 21.4    8388608  64.0  4768814  36.4</code></pre>
 </div>
 <p>Ainsi que la structure du jeu de données:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sa_heart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sa_heart)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   462 obs. of  10 variables:
  $ sbp      : int  160 144 118 170 134 132 142 114 114 132 ...
@@ -590,45 +620,31 @@ Vcells 2797256 21.4    8388608  64.0  4768814  36.4</code></pre>
 <h2 class="anchored" data-anchor-id="exercice-2-2">Exercice 2</h2>
 <p>Dans un premier temps nous allons conserver seulement les variables quantitatives:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>sa_heart_quant <span class="ot">&lt;-</span> sa_heart <span class="sc">%&gt;%</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>famhist, <span class="sc">-</span>chd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>sa_heart_quant <span class="ot">&lt;-</span> sa_heart <span class="sc">%&gt;%</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>famhist, <span class="sc">-</span>chd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exercice-3-2" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-3-2">Exercice 3</h2>
 <p>Nous allons transformer les données afin d’effectuer une ACP:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>sa_heart_cr <span class="ot">&lt;-</span> <span class="fu">scale</span>(sa_heart_quant, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>sa_heart_cr <span class="ot">&lt;-</span> <span class="fu">scale</span>(sa_heart_quant, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On va utiliser les packages factoextra et FactoMineR pour réaliser l’ACP.</p>
 <p>On charge nos librairies:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On réalise l’ACP sur nos données centrées réduites:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>res.pca <span class="ot">&lt;-</span> <span class="fu">PCA</span>(sa_heart_cr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-39-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>res.pca <span class="ot">&lt;-</span> <span class="fu">PCA</span>(sa_heart_cr, <span class="at">graph =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On peut à présent représenter le nuage des individus sur plan Axe1 - Axe2:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nuage des individus</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nuage des individus</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(res.pca,</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">geom =</span> <span class="st">"point"</span>)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">geom =</span> <span class="st">"point"</span>)    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -639,7 +655,7 @@ Vcells 2797256 21.4    8388608  64.0  4768814  36.4</code></pre>
 </div>
 <p>On peut également regarder le nuage des variables:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(res.pca, <span class="at">col.var =</span> <span class="st">"black"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(res.pca, <span class="at">col.var =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -665,6 +681,1001 @@ Vcells 2797256 21.4    8388608  64.0  4768814  36.4</code></pre>
 </section>
 <section id="exercice-4-2" class="level2">
 <h2 class="anchored" data-anchor-id="exercice-4-2">Exercice 4</h2>
+<p>On veut colorer les points dans le nuage des individus en fonction des deux variables qualitatives.</p>
+<section id="selon-chd" class="level3">
+<h3 class="anchored" data-anchor-id="selon-chd">Selon CHD</h3>
+<p>On refait donc notre nuage des individus, en fonction de la présence de maladie cardiaque chez l’individu.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(res.pca,</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.ind =</span> <span class="fu">as.factor</span>(sa_heart<span class="sc">$</span>chd), <span class="co"># On transforme en facteur pour avoir des couleurs distinctes</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="co"># Bleu pour sain (0), Rouge pour malade (1)</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">legend.title =</span> <span class="st">"Maladie (chd)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Par rapport à l’axe 1, on remarque que les individus malades ont une valeur plus élevés.</p>
+<p>Ils ont donc des valeurs plus élevés sur les variables fortement représentées par cette axe (adiposity, obesity, age et sbp)</p>
+</section>
+<section id="selon-famhist" class="level3">
+<h3 class="anchored" data-anchor-id="selon-famhist">Selon famhist</h3>
+<p>On refait donc notre nuage des individus, en fonction de la présence d’antécédents familiaux chez l’individu</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(res.pca,</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.ind =</span> <span class="fu">as.factor</span>(sa_heart<span class="sc">$</span>famhist), <span class="co"># On transforme en facteur pour avoir des couleurs distinctes</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="co"># Bleu pour sain (0), Rouge pour malade (1)</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">legend.title =</span> <span class="st">"Antécédents (famhist)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On retrouve une disparité similaire à la variable chd.</p>
+</section>
+</section>
+<section id="exercice-5-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-5-1">Exercice 5</h2>
+<p>Pour réaliser l’algo des k-means on reprend les données centrées et réduites.</p>
+<p>On se fait un vecteur de stockage des inertie en fonciton du nb de cluster k.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>inertie_vec <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="at">times =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>On lance ensuite l’algo avec k allant de 1 à 10 clusters:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># on utilise nstart=20 pour stabiliser les résultats</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  km <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(sa_heart_cr, <span class="at">centers =</span> k, <span class="at">nstart =</span> <span class="dv">5</span>)</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  inertie_vec[k] <span class="ot">&lt;-</span> km<span class="sc">$</span>tot.withinss</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Et maintenant on peut faire un graphique pour regarder le critère du coude :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, inertie_vec, <span class="at">type =</span> <span class="st">"b"</span>, </span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Nombre de clusters (k)"</span>, </span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Inertie intra-classe"</span>,</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Critère du coude pour SAHeart"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On observe un coude à k=3 donc on retient cette valeur pour notre paramètre.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>groupes.km <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(sa_heart_cr, <span class="at">centers =</span> <span class="dv">3</span>, <span class="at">nstart =</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nous représentons maintenant les clusters créés sur le plan de l’axe1 - axe2 de l’ACP:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(groupes.km, <span class="at">data =</span> sa_heart_cr, <span class="at">ellipse.type =</span><span class="st">"convex"</span>,</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="at">xlab =</span> <span class="st">"Axe␣1"</span>, <span class="at">ylab =</span> <span class="st">"Axe␣2"</span>)<span class="sc">+</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On ajoute la colonne des clusters (groupes.km$cluster) à notre jeu de données original pour pouvoir comparer.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajout des clusters au dataframe d'origine</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>sa_heart_bilan <span class="ot">&lt;-</span> sa_heart <span class="sc">%&gt;%</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Cluster =</span> <span class="fu">as.factor</span>(groupes.km<span class="sc">$</span>cluster))</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Tableau croisé pour la maladie (chd)</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(sa_heart_bilan<span class="sc">$</span>Cluster, sa_heart_bilan<span class="sc">$</span>chd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+     No  Si
+  1  47  50
+  2 160  38
+  3  95  72</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tableau croisé pour les antécédents (famhist)</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(sa_heart_bilan<span class="sc">$</span>Cluster, sa_heart_bilan<span class="sc">$</span>famhist)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+    Absent Present
+  1     50      47
+  2    141      57
+  3     79      88</code></pre>
+</div>
+</div>
+</section>
+<section id="exercice-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercice-6">Exercice 6</h2>
+<p>Nous allons effectuer une classification ascendante hiérarchique.</p>
+<p>La première étape est de construire la matrice des distances avec la fonction dist:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>d.sa_heart <span class="ot">&lt;-</span> <span class="fu">dist</span>(sa_heart_cr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ensuite on peut lancer le clustering hiérarchique avec la commande hclust() puis afficher le dendogramme:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>hc.ward <span class="ot">=</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(sa_heart_cr), <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc.ward)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>À partir du dendrogramme, on peut construire les classes en effectuant une coupe horizontale dans l’arbre et récupérer les classes ainsi définies. La commande cutree permet de préciser le nombre de clusters que l’on veut et rect.hclust() de les représenter sur le dendogramme.</p>
+<p>Au préalable, pour nous aider à choisir le nombre de classes, nous pouvons représenter les sauts d’inertie du dendogramme selon le nombre de classes retenues.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>inertie <span class="ot">&lt;-</span> <span class="fu">sort</span>(hc.ward<span class="sc">$</span>height, <span class="at">decreasing =</span>  T)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(inertie[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>], <span class="at">type =</span> <span class="st">"s"</span>, <span class="at">xlab =</span> <span class="st">"Nombre de classes"</span>, <span class="at">ylab =</span> <span class="st">"Inertie"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On remarque un saut très net pour k = 2, ensuite on peut aussi relever un saut pour k = 5.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>clusterCAH <span class="ot">=</span> <span class="fu">cutree</span>(hc.ward,<span class="dv">4</span>)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc.ward)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc.ward, <span class="dv">2</span>, <span class="at">border =</span> <span class="st">"green3"</span>) <span class="co"># test avec 2 classes</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc.ward, <span class="dv">5</span>, <span class="at">border =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Comme pour les kmeans, on peut afficher les clusters:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(<span class="fu">list</span>(<span class="at">cluster =</span> clusterCAH, <span class="at">data =</span> sa_heart_cr), </span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">ellipse.type =</span> <span class="st">"convex"</span>,</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">xlab =</span> <span class="st">"Axe 1"</span>, <span class="at">ylab =</span> <span class="st">"Axe 2"</span>) <span class="sc">+</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Comme pour les k-means, on croise ces nouveaux groupes avec chd et famhist.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparaison avec la maladie (chd)</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clusterCAH, sa_heart<span class="sc">$</span>chd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          
+clusterCAH  No  Si
+         1  34  37
+         2  83  81
+         3 112  36
+         4  73   6</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparaison avec les antécédents (famhist)</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clusterCAH, sa_heart<span class="sc">$</span>famhist)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          
+clusterCAH Absent Present
+         1     37      34
+         2     73      91
+         3    100      48
+         4     60      19</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="module-4" class="level1">
+<h1>Module 4</h1>
+<p>On nettoie l’environnement</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="partie-1" class="level2">
+<h2 class="anchored" data-anchor-id="partie-1">Partie 1</h2>
+<section id="exercice-1-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-1-3">Exercice 1</h3>
+<p>Nous allons charger les données “Ozone.txt”.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>ozone <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"Data/ozone.txt"</span>, <span class="at">header =</span> T, <span class="at">sep =</span> <span class="st">" "</span>, <span class="at">dec =</span> <span class="st">"."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>On effectue quelques statistiques descriptives du jeu de données:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ozone)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     maxO3              T9             T12             T15       
+ Min.   : 42.00   Min.   :11.30   Min.   :14.00   Min.   :14.90  
+ 1st Qu.: 70.75   1st Qu.:16.20   1st Qu.:18.60   1st Qu.:19.27  
+ Median : 81.50   Median :17.80   Median :20.55   Median :22.05  
+ Mean   : 90.30   Mean   :18.36   Mean   :21.53   Mean   :22.63  
+ 3rd Qu.:106.00   3rd Qu.:19.93   3rd Qu.:23.55   3rd Qu.:25.40  
+ Max.   :166.00   Max.   :27.00   Max.   :33.50   Max.   :35.50  
+      Ne9             Ne12            Ne15           Vx9         
+ Min.   :0.000   Min.   :0.000   Min.   :0.00   Min.   :-7.8785  
+ 1st Qu.:3.000   1st Qu.:4.000   1st Qu.:3.00   1st Qu.:-3.2765  
+ Median :6.000   Median :5.000   Median :5.00   Median :-0.8660  
+ Mean   :4.929   Mean   :5.018   Mean   :4.83   Mean   :-1.2143  
+ 3rd Qu.:7.000   3rd Qu.:7.000   3rd Qu.:7.00   3rd Qu.: 0.6946  
+ Max.   :8.000   Max.   :8.000   Max.   :8.00   Max.   : 5.1962  
+      Vx12             Vx15            maxO3v           vent          
+ Min.   :-7.878   Min.   :-9.000   Min.   : 42.00   Length:112        
+ 1st Qu.:-3.565   1st Qu.:-3.939   1st Qu.: 71.00   Class :character  
+ Median :-1.879   Median :-1.550   Median : 82.50   Mode  :character  
+ Mean   :-1.611   Mean   :-1.691   Mean   : 90.57                     
+ 3rd Qu.: 0.000   3rd Qu.: 0.000   3rd Qu.:106.00                     
+ Max.   : 6.578   Max.   : 5.000   Max.   :166.00                     
+    pluie          
+ Length:112        
+ Class :character  
+ Mode  :character  
+                   
+                   
+                   </code></pre>
+</div>
+</div>
+<p>On remarque un écart important entre le minimum et le maximum de max03. De plus, la moyenne est supérieur à la médiane de 10, ça peut indiquer la présence de pics de pollution.</p>
+<p>On commence avec la matrice de corrélation pour voir quelles variables influent sur l’Ozone:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on utilise is.numeric pour garder les variables du df qui sont numériques, pour pouvoir appliquer la fonction cor</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(ozone[, <span class="fu">sapply</span>(ozone, is.numeric)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            maxO3         T9        T12        T15        Ne9       Ne12
+maxO3   1.0000000  0.6993865  0.7842623  0.7745700 -0.6217042 -0.6407513
+T9      0.6993865  1.0000000  0.8829672  0.8464460 -0.4838636 -0.4722475
+T12     0.7842623  0.8829672  1.0000000  0.9461930 -0.5842709 -0.6601002
+T15     0.7745700  0.8464460  0.9461930  1.0000000 -0.5861683 -0.6492261
+Ne9    -0.6217042 -0.4838636 -0.5842709 -0.5861683  1.0000000  0.7883411
+Ne12   -0.6407513 -0.4722475 -0.6601002 -0.6492261  0.7883411  1.0000000
+Ne15   -0.4783021 -0.3251386 -0.4580991 -0.5746817  0.5502490  0.7098668
+Vx9     0.5276234  0.2506896  0.4301045  0.4530892 -0.4976361 -0.4926581
+Vx12    0.4307959  0.2223857  0.3126291  0.3437506 -0.5287752 -0.5103204
+Vx15    0.3918989  0.1703215  0.2706802  0.2866028 -0.4939010 -0.4322695
+maxO3v  0.6845160  0.5822451  0.5636289  0.5678887 -0.2765500 -0.3619227
+             Ne15        Vx9       Vx12       Vx15     maxO3v
+maxO3  -0.4783021  0.5276234  0.4307959  0.3918989  0.6845160
+T9     -0.3251386  0.2506896  0.2223857  0.1703215  0.5822451
+T12    -0.4580991  0.4301045  0.3126291  0.2706802  0.5636289
+T15    -0.5746817  0.4530892  0.3437506  0.2866028  0.5678887
+Ne9     0.5502490 -0.4976361 -0.5287752 -0.4939010 -0.2765500
+Ne12    0.7098668 -0.4926581 -0.5103204 -0.4322695 -0.3619227
+Ne15    1.0000000 -0.4014717 -0.4318633 -0.3782896 -0.3084755
+Vx9    -0.4014717  1.0000000  0.7501775  0.6822608  0.3403172
+Vx12   -0.4318633  0.7501775  1.0000000  0.8371720  0.2236755
+Vx15   -0.3782896  0.6822608  0.8371720  1.0000000  0.1899220
+maxO3v -0.3084755  0.3403172  0.2236755  0.1899220  1.0000000</code></pre>
+</div>
+</div>
+<p>Pour essayer de mieux s’y retrouver dans la matrice de corrélation, on va utiliser le package ggcorrplot:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>corr_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(ozone[, <span class="fu">sapply</span>(ozone, is.numeric)], <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr_matrix, </span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">lab =</span> <span class="cn">TRUE</span>,        <span class="co"># Affiche les coefficients chiffrés sur la carte</span></span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">title =</span> <span class="st">"Corrélations des variables de Ozone"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On observe ici une forte corrélation positive entre maxO3 et les températures, particulièrement T12 et T15. À l’inverse, une corrélation négative avec les variables Ne9, Ne12 ou Ne15. On retrouve également de la colinéarité: les températures entre elles (T9, T12, T15) sont très fortement corrélées</p>
+</section>
+<section id="exercice-2-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-2-3">Exercice 2</h3>
+<p>On veut étudier la relation entre la variable maxO3 et T15 (la température à 15h). Pour cela on va effectuer une régression linéaire simple pour expliquer la concentration en ozone en fonction de cette température.</p>
+<p>Le modèle utilisé est de la forme <span class="math inline">\(maxO3 = \beta_0 + \beta_1 \cdot T15 + \epsilon\)</span>. On utilise la fonction lm() pour estimer les paramètres.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réalisation de la régression linéaire simple</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>rl_simple <span class="ot">&lt;-</span> <span class="fu">lm</span>(maxO3 <span class="sc">~</span> T15, <span class="at">data =</span> ozone)</span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage des résultats détaillés</span></span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rl_simple)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = maxO3 ~ T15, data = ozone)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-34.13 -13.93   0.40  12.57  50.04 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -18.7331     8.6562  -2.164   0.0326 *  
+T15           4.8187     0.3752  12.844   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 17.91 on 110 degrees of freedom
+Multiple R-squared:    0.6, Adjusted R-squared:  0.5963 
+F-statistic:   165 on 1 and 110 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Le coefficicient <span class="math inline">\(\beta_0 = -18.73\)</span> est la valeur théorique de l’ozone si la température était de 0°C. Le coefficient de <span class="math inline">\(\beta_1 = 4.82\)</span> indique l’augmentation moyenne de la concentration d’ozone pour chaque degré supplémentaire à 15h. Le coefficient est positif, cela confirme que la chaleur favorise la pollution.</p>
+<p>Le R² indique la part de la variabilité de l’ozone expliquée par la température. On a R² = 0.6 donc T15 semble être un bon prédicteur.</p>
+<p>On réalise le graphique représentant le nuage de points (T15, maxO3) et la régression linéaire:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ozone, <span class="fu">aes</span>(<span class="at">x =</span> T15, <span class="at">y =</span> maxO3)) <span class="sc">+</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span>                          <span class="co"># Nuage de points</span></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="co"># Droite de régression</span></span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Lien entre Température (15h) et Ozone"</span>,</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Température à 15h (T15)"</span>,</span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Concentration max en Ozone (maxO3)"</span>) <span class="sc">+</span></span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exercice-3-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-3-3">Exercice 3</h3>
+<p>On veut à présent effectuer une régression linéaire multiple.</p>
+<p>Pour construire ce modèle on va sélectionner les variables suivantes:</p>
+<ul>
+<li>T15, c’est la variable de température avec la plus grosse corrélation avec la variable cible</li>
+<li>Ne12, on a vu que une forte nébulosité faisait baisser la concentration</li>
+<li>max03v, le niveau d’ozone d’un jour dépend en partie de celui de la veille</li>
+<li>Vx15 : le vent joue un rôle crucial</li>
+</ul>
+<p>On ne garde que une variable pour chaque type (une température, une nébulosité, un vent) car on a vu que <span class="math inline">\(T9\)</span>, <span class="math inline">\(T12\)</span> et <span class="math inline">\(T15\)</span> sont très corrélées entre elles et donc les inclure n’apporterait pas beaucoup de nouvelles infos au modèle et peut même le destabiliser. C’est aussi car on souhaite respecter le principe de parcimonie: expliquer le maximum de variance avec le minimum de variables possible et donc simplifier le modèle.</p>
+<p>De plus on a gardé les variables avec de milieu de journée, car on pense que c’est à ce moment là que les pics de formation d’ozone sont formés.</p>
+<p>On effectue donc notre régression multiple:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modèle de régression linéaire multiple</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>rl_multiple <span class="ot">&lt;-</span> <span class="fu">lm</span>(maxO3 <span class="sc">~</span> T15 <span class="sc">+</span> Ne12 <span class="sc">+</span> maxO3v <span class="sc">+</span> Vx15, <span class="at">data =</span> ozone)</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage du résumé statistique</span></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rl_multiple)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = maxO3 ~ T15 + Ne12 + maxO3v + Vx15, data = ozone)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-56.798  -8.662   0.642   8.115  41.358 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 13.77678   12.34229   1.116  0.26683    
+T15          2.56632    0.46129   5.563 1.97e-07 ***
+Ne12        -2.34626    0.85941  -2.730  0.00741 ** 
+maxO3v       0.35691    0.06035   5.914 4.06e-08 ***
+Vx15         1.23941    0.55431   2.236  0.02743 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 14.79 on 107 degrees of freedom
+Multiple R-squared:  0.7347,    Adjusted R-squared:  0.7248 
+F-statistic: 74.09 on 4 and 107 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Le coefficient de détermination <span class="math inline">\(R^2\)</span> est d’environ 0,735. Cela signifie que notre modèle explique 73,5 % de la variabilité de max03, ce qui est une nette amélioration par rapport au modèle simple (qui tournait autour de 60 %)</p>
+<p>T15 et maxO3v ont des p-values très faibles (<span class="math inline">\(&lt; 0,001\)</span>), ce qui confirme leur impact majeur et hautement significatif sur max03. Ne12 a un coefficient négatif (environ -2,35), confirmant que plus le ciel est couvert à midi, plus la concentration d’ozone diminue. Vx15 est également significatif (<span class="math inline">\(p &lt; 0,05\)</span>), montrant que la composante du vent à 15h influence les niveaux de pollution enregistrés.</p>
+<p>Ce modèle multiple est bien plus robuste pour la prédiction que le modèle simple car il intègre la synergie entre la température, l’ensoleillement et la persistance temporelle de la pollution.</p>
+</section>
+</section>
+<section id="partie-2" class="level2">
+<h2 class="anchored" data-anchor-id="partie-2">Partie 2</h2>
+<p>Nettoyage de l’environnement:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="exercice-1-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-1-4">Exercice 1</h3>
+<p>On commence par charger les données:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>adclick <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Data/AdClick.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">","</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ensuite on effectue quelques statistiques descriptives pour explorer les données, mais avant on va passer en facteur les variables qui ne doivent pas être lues comme numériques:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>adclick<span class="sc">$</span>Click <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(adclick<span class="sc">$</span>Click)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>adclick<span class="sc">$</span>Gender <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(adclick<span class="sc">$</span>Gender)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Maintenant on peut s’intéresser à un summary de notre jeu de données:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(adclick)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    User.ID            Gender         Age        EstimatedSalary  Click  
+ Min.   :15566689   Female:204   Min.   :18.00   Min.   : 15000   0:257  
+ 1st Qu.:15626764   Male  :196   1st Qu.:29.75   1st Qu.: 43000   1:143  
+ Median :15694342                Median :37.00   Median : 70000          
+ Mean   :15691540                Mean   :37.66   Mean   : 69743          
+ 3rd Qu.:15750363                3rd Qu.:46.00   3rd Qu.: 88000          
+ Max.   :15815236                Max.   :60.00   Max.   :150000          </code></pre>
+</div>
+</div>
+<p>Ensuite on veut regarder si l’une de nos variables, à l’air d’avoir une influence sur le fait de cliquer ou non.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(adclick, <span class="fu">aes</span>(<span class="at">x =</span> Click, <span class="at">y =</span> Age, <span class="at">fill =</span> Click)) <span class="sc">+</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution de l'Âge selon le Clic"</span>, <span class="at">x =</span> <span class="st">"0=Non, 1=Oui"</span>) <span class="sc">+</span></span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-69-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ce boxplot de l’âge montre que le groupe Click = 1 est nettement plus âgé que le groupe Click = 0. Les utilisateurs qui cliquent sur la publicité sont sensiblement plus âgés que ceux qui ne cliquent pas.</p>
+<p>De la même manière on regarde pour le salaire:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(adclick, <span class="fu">aes</span>(<span class="at">x =</span> Click, <span class="at">y =</span> EstimatedSalary, <span class="at">fill =</span> Click)) <span class="sc">+</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution du Salaire selon le Clic"</span>, <span class="at">y =</span> <span class="st">"Salaire Estimé"</span>) <span class="sc">+</span></span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-70-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On remarque un net décalage vers le haut pour le groupe qui ont cliqué. La médiane et l’ensemble de la boîte sont situées plus haut que pour le groupe 0. Les personnes avec un salaire plus élevé ont plus tendance à s’intéresser à la publicité.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(adclick, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">fill =</span> Click)) <span class="sc">+</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> <span class="co"># "fill" pour voir les pourcentages</span></span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Proportion de Clics par Genre"</span>, <span class="at">y =</span> <span class="st">"Fréquence"</span>) <span class="sc">+</span></span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-71-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Les proportions de clics entre les hommes et les femmes sont assez proches, le genre ne semble pas influencer fortement le clic.</p>
+</section>
+<section id="exercice-2-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-2-4">Exercice 2</h3>
+<p>Nous allons maintenant effectuer une régression logistique pour modéliser la probabilité de cliquer sur la publicité en fonction de l’âge, du salaire et du genre.</p>
+<p>On utilise la fonction glm() avec l’argument family = binomial pour spécifier que la variable réponse suit une loi binomiale avec 0 ou 1.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ici on réalise le modèle</span></span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>reg_log <span class="ot">&lt;-</span> <span class="fu">glm</span>(Click <span class="sc">~</span> Age <span class="sc">+</span> EstimatedSalary <span class="sc">+</span> Gender, </span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> adclick, </span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">family =</span> binomial)</span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="co"># puis on affiche les résultats</span></span>
+<span id="cb101-7"><a href="#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = Click ~ Age + EstimatedSalary + Gender, family = binomial, 
+    data = adclick)
+
+Coefficients:
+                  Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)     -1.278e+01  1.359e+00  -9.405  &lt; 2e-16 ***
+Age              2.370e-01  2.638e-02   8.984  &lt; 2e-16 ***
+EstimatedSalary  3.644e-05  5.473e-06   6.659 2.77e-11 ***
+GenderMale       3.338e-01  3.052e-01   1.094    0.274    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 521.57  on 399  degrees of freedom
+Residual deviance: 275.84  on 396  degrees of freedom
+AIC: 283.84
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+</div>
+<p>L’intercept est très négatif, ce qui signifie que par défaut (âge 0, salaire 0), la probabilité de cliquer est quasi nulle. L’age, le coefficient est <span class="math inline">\(0.237 &gt; 0\)</span> et très significatif car <span class="math inline">\(p &lt; 0.001\)</span>. Cela confirme notre analyse exploratoire : plus on est âgé, plus la probabilité de cliquer augmente. Le Salaire: le coefficient est aussi positif et significatif. Un salaire élevé augmente les chances de clic. Le Genre: le coefficient = 0.33 n’est pas significatif car <span class="math inline">\(p = 0.274 &gt; 0.05\)</span>. Cela signifie que le genre n’a pas d’impact réel sur la décision de cliquer une fois qu’on connaît l’âge et le salaire. On pourrait envisager de retirer cette variable pour simplifier le modèle.</p>
+<p>Nous allons maintenant observer les erreurs de classifications grâce à une table croisant le clic prédit et le clic effectif Pour ça on calcule la prédiction des probabilités:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>prev<span class="ot">&lt;-</span><span class="fu">predict</span>(reg_log, <span class="at">type=</span><span class="st">"response"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Quand la proba est &gt; 0.5 alors clic = 1 ; sinon clic = 0</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>prev<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(prev<span class="sc">&gt;</span><span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Et maintenant on peut regarder le tableau de fréquence des prédictions 0/1 et l’accuracy de notre modèle:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># precision globale</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(prev<span class="sc">==</span>adclick<span class="sc">$</span>Click)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8525</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(prev,adclick<span class="sc">$</span>Click)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    
+prev   0   1
+   0 237  39
+   1  20 104</code></pre>
+</div>
+</div>
+<p>Il y a 20 faux positifs (prédits cliqueurs à tort) et 39 faux négatifs (cliqueurs ratés). Le modèle est performant avec 85% de bonnes prédictions.</p>
+</section>
+<section id="exercice-3-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercice-3-4">Exercice 3</h3>
+<p>On souhaite construire un arbre de classification, pour cela on doit charger les librairies :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ensuite on peut construire notre arbre avec rpart:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>arbre <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Click<span class="sc">~</span>.,<span class="at">data=</span>adclick,<span class="at">cp=</span><span class="fl">0.02</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>La librairie rpart.plot permet de résumer l’information de l’arbre et de le représenter graphiquement :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(arbre,<span class="at">main=</span><span class="st">"Représentation de l’arbre"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-78-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Regardons les prédictions et la performance de notre arbre :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prédictions sous forme de probabilités</span></span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>pred_arbre<span class="ot">&lt;-</span><span class="fu">predict</span>(arbre,<span class="at">data=</span>adclick)</span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Prédictions sous forme de variable binaire</span></span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a>pred_arbre_cl<span class="ot">&lt;-</span><span class="fu">predict</span>(arbre,<span class="at">data=</span>adclick,<span class="at">type=</span><span class="st">"class"</span>)</span>
+<span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-7"><a href="#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparaison avec les "vraies" valeurs de Y</span></span>
+<span id="cb112-8"><a href="#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(pred_arbre_cl, adclick<span class="sc">$</span>Click)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             
+pred_arbre_cl   0   1
+            0 232   9
+            1  25 134</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Taux de bonnes prédictions</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(pred_arbre_cl<span class="sc">==</span>adclick<span class="sc">$</span>Click)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.915</code></pre>
+</div>
+</div>
+<p>L’arbre de classification se révèle être le modèle le plus performant pour ce problème. Avec une précision supérieure à 90%, il surpasse la régression logistique.</p>
+</section>
+</section>
+</section>
+<section id="module-5" class="level1">
+<h1>Module 5</h1>
+<section id="présentation-description-et-exploration-des-données" class="level2">
+<h2 class="anchored" data-anchor-id="présentation-description-et-exploration-des-données">Présentation, description et exploration des données</h2>
+<p>Pour cet exercice nous choisissons le jeu de données <em>Breast Cancer Wisconsin (Diagnostic)</em>.</p>
+<p>Ce jeu de données provient de UCI Machine Learning Repository, qui est une archive de l’Université de Californie à Irvine, elle centralise tout un tas de jeux de données de divers domaines.</p>
+<p>La variable à prédire est nommée <code>Diagnosis</code>. Elle est qualitative et comporte deux modalités:</p>
+<ul>
+<li>M (Maligne) : Indique une tumeur cancéreuse.</li>
+<li>B (Bénigne) : Indique une tumeur non cancéreuse.</li>
+</ul>
+<p>Pour chaque observation, 30 variables numériques sont disponibles. Elles correspondent à la moyenne, l’écart-type et la valeur maximale, de 10 mesures de la tumeur.</p>
+<p>On commence par nettoyer notre environnement:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nous pouvons maintenant charger nos données:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data"</span></span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">","</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Pour se faciliter la suite de notre travail, nous allons renommer les colonnes du dataset:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ID"</span>, <span class="st">"Diagnostic"</span>,</span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Les 10 Moyennes</span></span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rayon_Moy"</span>, <span class="st">"Texture_Moy"</span>, <span class="st">"Perimetre_Moy"</span>, <span class="st">"Aire_Moy"</span>, <span class="st">"Lisse_Moy"</span>, </span>
+<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Compacite_Moy"</span>, <span class="st">"Concavite_Moy"</span>, <span class="st">"Pts_Concaves_Moy"</span>, <span class="st">"Symetrie_Moy"</span>, <span class="st">"Dim_Fractale_Moy"</span>,</span>
+<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Les 10 Erreurs Standards (SE)</span></span>
+<span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rayon_SE"</span>, <span class="st">"Texture_SE"</span>, <span class="st">"Perimetre_SE"</span>, <span class="st">"Aire_SE"</span>, <span class="st">"Lisse_SE"</span>, </span>
+<span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Compacite_SE"</span>, <span class="st">"Concavite_SE"</span>, <span class="st">"Pts_Concaves_SE"</span>, <span class="st">"Symetrie_SE"</span>, <span class="st">"Dim_Fractale_SE"</span>,</span>
+<span id="cb118-11"><a href="#cb118-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb118-12"><a href="#cb118-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Les 10 Pires valeurs (Worst)</span></span>
+<span id="cb118-13"><a href="#cb118-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rayon_Pire"</span>, <span class="st">"Texture_Pire"</span>, <span class="st">"Perimetre_Pire"</span>, <span class="st">"Aire_Pire"</span>, <span class="st">"Lisse_Pire"</span>, </span>
+<span id="cb118-14"><a href="#cb118-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Compacite_Pire"</span>, <span class="st">"Concavite_Pire"</span>, <span class="st">"Pts_Concaves_Pire"</span>, <span class="st">"Symetrie_Pire"</span>, <span class="st">"Dim_Fractale_Pire"</span></span>
+<span id="cb118-15"><a href="#cb118-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb118-16"><a href="#cb118-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-17"><a href="#cb118-17" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Diagnostic <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>Diagnostic)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nous allons maintenant analyser les varaibles explicatives de notre data frame.</p>
+<p>Nous utilisons la fonction summary pour obtenir un aperçu rapide:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       ID            Diagnostic   Rayon_Moy       Texture_Moy   
+ Min.   :     8670   B:357      Min.   : 6.981   Min.   : 9.71  
+ 1st Qu.:   869218   M:212      1st Qu.:11.700   1st Qu.:16.17  
+ Median :   906024              Median :13.370   Median :18.84  
+ Mean   : 30371831              Mean   :14.127   Mean   :19.29  
+ 3rd Qu.:  8813129              3rd Qu.:15.780   3rd Qu.:21.80  
+ Max.   :911320502              Max.   :28.110   Max.   :39.28  
+ Perimetre_Moy       Aire_Moy        Lisse_Moy       Compacite_Moy    
+ Min.   : 43.79   Min.   : 143.5   Min.   :0.05263   Min.   :0.01938  
+ 1st Qu.: 75.17   1st Qu.: 420.3   1st Qu.:0.08637   1st Qu.:0.06492  
+ Median : 86.24   Median : 551.1   Median :0.09587   Median :0.09263  
+ Mean   : 91.97   Mean   : 654.9   Mean   :0.09636   Mean   :0.10434  
+ 3rd Qu.:104.10   3rd Qu.: 782.7   3rd Qu.:0.10530   3rd Qu.:0.13040  
+ Max.   :188.50   Max.   :2501.0   Max.   :0.16340   Max.   :0.34540  
+ Concavite_Moy     Pts_Concaves_Moy   Symetrie_Moy    Dim_Fractale_Moy 
+ Min.   :0.00000   Min.   :0.00000   Min.   :0.1060   Min.   :0.04996  
+ 1st Qu.:0.02956   1st Qu.:0.02031   1st Qu.:0.1619   1st Qu.:0.05770  
+ Median :0.06154   Median :0.03350   Median :0.1792   Median :0.06154  
+ Mean   :0.08880   Mean   :0.04892   Mean   :0.1812   Mean   :0.06280  
+ 3rd Qu.:0.13070   3rd Qu.:0.07400   3rd Qu.:0.1957   3rd Qu.:0.06612  
+ Max.   :0.42680   Max.   :0.20120   Max.   :0.3040   Max.   :0.09744  
+    Rayon_SE        Texture_SE      Perimetre_SE       Aire_SE       
+ Min.   :0.1115   Min.   :0.3602   Min.   : 0.757   Min.   :  6.802  
+ 1st Qu.:0.2324   1st Qu.:0.8339   1st Qu.: 1.606   1st Qu.: 17.850  
+ Median :0.3242   Median :1.1080   Median : 2.287   Median : 24.530  
+ Mean   :0.4052   Mean   :1.2169   Mean   : 2.866   Mean   : 40.337  
+ 3rd Qu.:0.4789   3rd Qu.:1.4740   3rd Qu.: 3.357   3rd Qu.: 45.190  
+ Max.   :2.8730   Max.   :4.8850   Max.   :21.980   Max.   :542.200  
+    Lisse_SE         Compacite_SE       Concavite_SE     Pts_Concaves_SE   
+ Min.   :0.001713   Min.   :0.002252   Min.   :0.00000   Min.   :0.000000  
+ 1st Qu.:0.005169   1st Qu.:0.013080   1st Qu.:0.01509   1st Qu.:0.007638  
+ Median :0.006380   Median :0.020450   Median :0.02589   Median :0.010930  
+ Mean   :0.007041   Mean   :0.025478   Mean   :0.03189   Mean   :0.011796  
+ 3rd Qu.:0.008146   3rd Qu.:0.032450   3rd Qu.:0.04205   3rd Qu.:0.014710  
+ Max.   :0.031130   Max.   :0.135400   Max.   :0.39600   Max.   :0.052790  
+  Symetrie_SE       Dim_Fractale_SE       Rayon_Pire     Texture_Pire  
+ Min.   :0.007882   Min.   :0.0008948   Min.   : 7.93   Min.   :12.02  
+ 1st Qu.:0.015160   1st Qu.:0.0022480   1st Qu.:13.01   1st Qu.:21.08  
+ Median :0.018730   Median :0.0031870   Median :14.97   Median :25.41  
+ Mean   :0.020542   Mean   :0.0037949   Mean   :16.27   Mean   :25.68  
+ 3rd Qu.:0.023480   3rd Qu.:0.0045580   3rd Qu.:18.79   3rd Qu.:29.72  
+ Max.   :0.078950   Max.   :0.0298400   Max.   :36.04   Max.   :49.54  
+ Perimetre_Pire     Aire_Pire        Lisse_Pire      Compacite_Pire   
+ Min.   : 50.41   Min.   : 185.2   Min.   :0.07117   Min.   :0.02729  
+ 1st Qu.: 84.11   1st Qu.: 515.3   1st Qu.:0.11660   1st Qu.:0.14720  
+ Median : 97.66   Median : 686.5   Median :0.13130   Median :0.21190  
+ Mean   :107.26   Mean   : 880.6   Mean   :0.13237   Mean   :0.25427  
+ 3rd Qu.:125.40   3rd Qu.:1084.0   3rd Qu.:0.14600   3rd Qu.:0.33910  
+ Max.   :251.20   Max.   :4254.0   Max.   :0.22260   Max.   :1.05800  
+ Concavite_Pire   Pts_Concaves_Pire Symetrie_Pire    Dim_Fractale_Pire
+ Min.   :0.0000   Min.   :0.00000   Min.   :0.1565   Min.   :0.05504  
+ 1st Qu.:0.1145   1st Qu.:0.06493   1st Qu.:0.2504   1st Qu.:0.07146  
+ Median :0.2267   Median :0.09993   Median :0.2822   Median :0.08004  
+ Mean   :0.2722   Mean   :0.11461   Mean   :0.2901   Mean   :0.08395  
+ 3rd Qu.:0.3829   3rd Qu.:0.16140   3rd Qu.:0.3179   3rd Qu.:0.09208  
+ Max.   :1.2520   Max.   :0.29100   Max.   :0.6638   Max.   :0.20750  </code></pre>
+</div>
+</div>
+<p>On peut voir que le jeu de données contient 569 observations. On compte 357 cas bénins et 212 cas malins.</p>
+<p>On remarque des disparités d’échelles, notamment entre: L’Aire_Moy qui varie de 143,5 à 2501,0 (moyenne à 654,9) et la Lisse_Moy qui varie de 0,052 à 0,163 (moyenne à 0,096).</p>
+<p>De plus, on va supprimer la variable ID qui n’a pas d’intérêt:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>ID <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>On s’intéresse maintenant à la corrélation entre les variables:</p>
+<p>Nous avons scindé l’analyse des corrélations en trois volets pour conserver la lisibilité des coefficients.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Matrice des Moyennes</span></span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(df[, <span class="dv">2</span><span class="sc">:</span><span class="dv">11</span>]), </span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">type =</span> <span class="st">"lower"</span>, <span class="at">lab =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">title =</span> <span class="st">"Corrélations : Variables Moyennes"</span>)</span>
+<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-8"><a href="#cb122-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Matrice des Erreurs Standard</span></span>
+<span id="cb122-9"><a href="#cb122-9" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(df[, <span class="dv">12</span><span class="sc">:</span><span class="dv">21</span>]), </span>
+<span id="cb122-10"><a href="#cb122-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">type =</span> <span class="st">"lower"</span>, <span class="at">lab =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb122-11"><a href="#cb122-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">title =</span> <span class="st">"Corrélations des écarts types"</span>)</span>
+<span id="cb122-12"><a href="#cb122-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-13"><a href="#cb122-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Matrice des "Pires" valeurs</span></span>
+<span id="cb122-14"><a href="#cb122-14" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(df[, <span class="dv">22</span><span class="sc">:</span><span class="dv">31</span>]), </span>
+<span id="cb122-15"><a href="#cb122-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">type =</span> <span class="st">"lower"</span>, <span class="at">lab =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb122-16"><a href="#cb122-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">title =</span> <span class="st">"Corrélations : Pires valeurs"</span>)</span>
+<span id="cb122-17"><a href="#cb122-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-18"><a href="#cb122-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage des 3 graphiques l'un après l'autre</span></span>
+<span id="cb122-19"><a href="#cb122-19" aria-hidden="true" tabindex="-1"></a>p1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-85-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-85-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>p3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-85-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On peut voir que la forte colinéarité entre les variables de taille (Rayon, Périmètre, Aire) est systémique et se retrouve à l’identique dans les trois groupes de mesures.</p>
+<p>On observe que les trois matrices sont quasi-identiques, ce qui confirme la redondance de l’information entre ces trois groupes.</p>
+<p>De la même manière, les graphiques suivants illustrent les liens entre la variable cible et les variables explicatives, permettant de repérer visuellement les variables qui distinguent le plus nettement les tumeurs malignes des tumeurs bénignes.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-4"><a href="#cb125-4" aria-hidden="true" tabindex="-1"></a><span class="co"># On passe les données en format "long" pour ggplot</span></span>
+<span id="cb125-5"><a href="#cb125-5" aria-hidden="true" tabindex="-1"></a><span class="co"># On ne garde que le Diagnostic et les 10 variables moyennes</span></span>
+<span id="cb125-6"><a href="#cb125-6" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(df[, <span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>], <span class="at">id.vars =</span> <span class="st">"Diagnostic"</span>)</span>
+<span id="cb125-7"><a href="#cb125-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb125-8"><a href="#cb125-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Création de la grille de Boxplots</span></span>
+<span id="cb125-9"><a href="#cb125-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_long, <span class="fu">aes</span>(<span class="at">x =</span> Diagnostic, <span class="at">y =</span> value, <span class="at">fill =</span> Diagnostic)) <span class="sc">+</span></span>
+<span id="cb125-10"><a href="#cb125-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb125-11"><a href="#cb125-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="co"># "free" car les échelles sont très différentes</span></span>
+<span id="cb125-12"><a href="#cb125-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution des variables moyennes selon le Diagnostic"</span>,</span>
+<span id="cb125-13"><a href="#cb125-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Valeur normalisée (échelle libre)"</span>) <span class="sc">+</span></span>
+<span id="cb125-14"><a href="#cb125-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-86-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>data_long_se <span class="ot">&lt;-</span> <span class="fu">melt</span>(df[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">12</span><span class="sc">:</span><span class="dv">21</span>)], <span class="at">id.vars =</span> <span class="st">"Diagnostic"</span>)</span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_long_se, <span class="fu">aes</span>(<span class="at">x =</span> Diagnostic, <span class="at">y =</span> value, <span class="at">fill =</span> Diagnostic)) <span class="sc">+</span></span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution des erreurs standards (SE) selon le Diagnostic"</span>) <span class="sc">+</span></span>
+<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-87-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>data_long_pire <span class="ot">&lt;-</span> <span class="fu">melt</span>(df[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">22</span><span class="sc">:</span><span class="dv">31</span>)], <span class="at">id.vars =</span> <span class="st">"Diagnostic"</span>)</span>
+<span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb127-3"><a href="#cb127-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data_long_pire, <span class="fu">aes</span>(<span class="at">x =</span> Diagnostic, <span class="at">y =</span> value, <span class="at">fill =</span> Diagnostic)) <span class="sc">+</span></span>
+<span id="cb127-4"><a href="#cb127-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb127-5"><a href="#cb127-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb127-6"><a href="#cb127-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution des pires valeurs (Pire) selon le Diagnostic"</span>) <span class="sc">+</span></span>
+<span id="cb127-7"><a href="#cb127-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Exercice_R_Nonon_Sebastien_files/figure-html/unnamed-chunk-88-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Les variables liées à la taille et à la forme (Rayon, Périmètre, Aire et surtout Points_Concaves) montrent une séparation très nette entre les classes. Les valeurs pour les tumeurs malignes (M) sont systématiquement plus élevées que pour les tumeurs bénignes (B). Ce sont nos meilleurs prédicteurs.</p>
+<p>On observe que la capacité de séparation est quasi identique entre les graphiques des “Moyennes” et des “Pires valeurs”. Cela confirme visuellement la forte redondance (multicolinéarité) identifiée lors de l’analyse des corrélations.</p>
+<p>Les graphiques des erreurs standards montrent des boîtes qui se chevauchent davantage. Cela indique que l’a variabilité’ecrat type est plus “bruité” et moins prédictif que la mesure elle-même.</p>
+<p>La séparation nette des classes sur plusieurs variables nous laisse penser que les modèles de classification devraient atteindre une précision élevée.</p>
+</section>
+<section id="présentation-des-modèles" class="level2">
+<h2 class="anchored" data-anchor-id="présentation-des-modèles">Présentation des modèles</h2>
+<p>Nous sélectionnons trois algorithmes de classifications supervisées:</p>
+<ul>
+<li><p><em>Les k plus proches voisins (k-NN)</em>: Pour prédire la classe d’un individu (ici une tumeur), l’algorithme cherche les <span class="math inline">\(k\)</span> observations les plus proches dans l’espace des variables. La prédiction (Bénigne ou Maligne) sera celle de la majorité de ses voisins. Il faudra normaliser les données pour que les variables aient le même poids sur le calcul de distance.</p></li>
+<li><p><em>La forêt aléatoire</em> : L’algorithme construit un grand nombre d’arbres de décision sur des sous-échantillons de données. La décision finale est prise par un vote majoritaire</p></li>
+<li><p><em>Les machines à vecteurs de support (SVM)</em>: Le modèle cherche à tracer une frontière (un hyperlpan) qui sépare les classes avec la plus grande marge possible. Il utilise une fonction “noyau” (kernel) pour projeter les données dans un espace de plus grande dimension.</p></li>
+</ul>
+</section>
+<section id="préparation-des-données" class="level2">
+<h2 class="anchored" data-anchor-id="préparation-des-données">Préparation des données</h2>
+<p>Avant d’entraîner on créé un échantillon de test de taille 20% de notre échantillon global:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Découpage Train (80%) / Test (20%)</span></span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Pour la reproductibilité</span></span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="co"># cette fonction nous assure un échantillonnage stratifié</span></span>
+<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a>trainIndex <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(df<span class="sc">$</span>Diagnostic, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> df[trainIndex, ]</span>
+<span id="cb128-9"><a href="#cb128-9" aria-hidden="true" tabindex="-1"></a>test_data  <span class="ot">&lt;-</span> df[<span class="sc">-</span>trainIndex, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="choix-de-stratégie-doptimisation" class="level2">
+<h2 class="anchored" data-anchor-id="choix-de-stratégie-doptimisation">Choix de stratégie d’optimisation</h2>
+<p>On définit le protocole d’entraînement de nos modèles: <em>Validation croisée</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>train_control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"cv"</span>, <span class="at">number =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Cette méthode permet d’évaluer la robustesse de nos algorithmes et de sélectionner les hyperparamètres en limitant les risques de sur-apprentissage.</p>
+<p>Au lieu d’entraîner notre modèle une seule fois, on lui demande de répéter l’opération plusieurs fois sur des sous-parties de nos données d’entraînement.</p>
+</section>
+<section id="entrainement-et-optimisation-des-modèles" class="level2">
+<h2 class="anchored" data-anchor-id="entrainement-et-optimisation-des-modèles">Entrainement et optimisation des modèles</h2>
+<section id="k-nn" class="level3">
+<h3 class="anchored" data-anchor-id="k-nn">k-NN</h3>
+<p>Le paramètre à optimiser est le nombre de voisins <span class="math inline">\(k\)</span>. Nous ajoutons ici le pré-traitement center et scale pour normaliser nos données car k-NN y est très sensible.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>model_knn <span class="ot">&lt;-</span> <span class="fu">train</span>(Diagnostic <span class="sc">~</span> ., </span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> train_data, </span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">method =</span> <span class="st">"knn"</span>,</span>
+<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> train_control,</span>
+<span id="cb130-5"><a href="#cb130-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"scale"</span>),</span>
+<span id="cb130-6"><a href="#cb130-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tuneLength =</span> <span class="dv">10</span>) <span class="co"># Teste 10 valeurs de k</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="forêt-aléatoire" class="level3">
+<h3 class="anchored" data-anchor-id="forêt-aléatoire">Forêt Aléatoire</h3>
+<p>Le paramètre <code>mtry</code> correspond au nombre de variables sélectionnées aléatoirement à chaque division d’un arbre.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a>model_rf <span class="ot">&lt;-</span> <span class="fu">train</span>(Diagnostic <span class="sc">~</span> ., </span>
+<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> train_data, </span>
+<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">"rf"</span>,</span>
+<span id="cb131-6"><a href="#cb131-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">trControl =</span> train_control,</span>
+<span id="cb131-7"><a href="#cb131-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">tuneLength =</span> <span class="dv">5</span>) <span class="co"># Teste 5 valeurs de mtry</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="svm" class="level3">
+<h3 class="anchored" data-anchor-id="svm">SVM</h3>
+<p>Nous utilisons un noyau linéaire pour commencer, où le paramètre <span class="math inline">\(C\)</span> contrôle la marge d’erreur.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a>model_svm <span class="ot">&lt;-</span> <span class="fu">train</span>(Diagnostic <span class="sc">~</span> ., </span>
+<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> train_data, </span>
+<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">method =</span> <span class="st">"svmLinear"</span>,</span>
+<span id="cb132-6"><a href="#cb132-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trControl =</span> train_control,</span>
+<span id="cb132-7"><a href="#cb132-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">preProcess =</span> <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"scale"</span>),</span>
+<span id="cb132-8"><a href="#cb132-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Grâce à la validation croisée, caret a testé différentes configurations de paramètres pour chaque algorithme. La combinaison maximisant le taux de bonne classification (accuracy) a été automatiquement retenue comme modèle final.</p>
+</section>
+</section>
+<section id="résultats-des-prédictions" class="level2">
+<h2 class="anchored" data-anchor-id="résultats-des-prédictions">Résultats des prédictions</h2>
+<p>Pour obtenir les résultats de nos prédictions, nous allons appliquer les modèles entraînés sur l’échantillon de test (de taille 20% et qui n’ont pas servi à l’entrainement des modèles)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>pred_knn <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_knn, <span class="at">newdata =</span> test_data)</span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>pred_rf  <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf,  <span class="at">newdata =</span> test_data)</span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>pred_svm <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_svm, <span class="at">newdata =</span> test_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Maintenant on peut afficher les matrices de confusion, où l’on compare les prédictions avec les vraies valeurs:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>cm_knn <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(pred_knn, test_data<span class="sc">$</span>Diagnostic, <span class="at">positive =</span> <span class="st">"M"</span>)</span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cm_knn)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction  B  M
+         B 71  1
+         M  0 41
+                                          
+               Accuracy : 0.9912          
+                 95% CI : (0.9517, 0.9998)
+    No Information Rate : 0.6283          
+    P-Value [Acc &gt; NIR] : &lt;2e-16          
+                                          
+                  Kappa : 0.981           
+                                          
+ Mcnemar's Test P-Value : 1               
+                                          
+            Sensitivity : 0.9762          
+            Specificity : 1.0000          
+         Pos Pred Value : 1.0000          
+         Neg Pred Value : 0.9861          
+             Prevalence : 0.3717          
+         Detection Rate : 0.3628          
+   Detection Prevalence : 0.3628          
+      Balanced Accuracy : 0.9881          
+                                          
+       'Positive' Class : M               
+                                          </code></pre>
+</div>
+</div>
+<p>On voit qu’on a un taux de bonne réponse de 99%. Le modèle a correctement classé 71 cas bénins (B) et 41 cas malins (M). Il n’y a qu’une seule erreur (1 cas malin classé en bénin).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a>cm_rf  <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(pred_rf,  test_data<span class="sc">$</span>Diagnostic, <span class="at">positive =</span> <span class="st">"M"</span>)</span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cm_rf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction  B  M
+         B 69  0
+         M  2 42
+                                          
+               Accuracy : 0.9823          
+                 95% CI : (0.9375, 0.9978)
+    No Information Rate : 0.6283          
+    P-Value [Acc &gt; NIR] : &lt;2e-16          
+                                          
+                  Kappa : 0.9625          
+                                          
+ Mcnemar's Test P-Value : 0.4795          
+                                          
+            Sensitivity : 1.0000          
+            Specificity : 0.9718          
+         Pos Pred Value : 0.9545          
+         Neg Pred Value : 1.0000          
+             Prevalence : 0.3717          
+         Detection Rate : 0.3717          
+   Detection Prevalence : 0.3894          
+      Balanced Accuracy : 0.9859          
+                                          
+       'Positive' Class : M               
+                                          </code></pre>
+</div>
+</div>
+<p>Le modèle de Forêt Aléatoire affiche une précision globale de 98,23 %. Bien que légèrement inférieure à celle du k-NN, cette méthode s’avère médicalement plus performante dans ce test car contrairement au k-NN, la Forêt Aléatoire n’a généré aucun faux négatif, garantissant qu’aucune tumeur cancéreuse n’a été ignorée, au prix de seulement deux faux positifs</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a>cm_svm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(pred_svm, test_data<span class="sc">$</span>Diagnostic, <span class="at">positive =</span> <span class="st">"M"</span>)</span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cm_svm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction  B  M
+         B 69  0
+         M  2 42
+                                          
+               Accuracy : 0.9823          
+                 95% CI : (0.9375, 0.9978)
+    No Information Rate : 0.6283          
+    P-Value [Acc &gt; NIR] : &lt;2e-16          
+                                          
+                  Kappa : 0.9625          
+                                          
+ Mcnemar's Test P-Value : 0.4795          
+                                          
+            Sensitivity : 1.0000          
+            Specificity : 0.9718          
+         Pos Pred Value : 0.9545          
+         Neg Pred Value : 1.0000          
+             Prevalence : 0.3717          
+         Detection Rate : 0.3717          
+   Detection Prevalence : 0.3894          
+      Balanced Accuracy : 0.9859          
+                                          
+       'Positive' Class : M               
+                                          </code></pre>
+</div>
+</div>
+<p>Bien que le k-NN affiche la précision globale la plus élevée (99,12 %), nous recommandons l’utilisation de la Forêt Aléatoire ou du SVM pour ce problème de diagnostic. En effet, ces deux modèles privilégient la sensibilité (100 %), garantissant ainsi qu’aucun cas malin ne reste non diagnostiqué.</p>
 </section>
 </section>
 
@@ -721,13 +1732,14 @@ Vcells 2797256 21.4    8388608  64.0  4768814  36.4</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
